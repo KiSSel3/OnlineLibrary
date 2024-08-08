@@ -6,5 +6,4 @@ public class UserEntity : BaseEntity
     public string PasswordHash { get; set; }
     public string RefreshToken { get; set; }
     public DateTime RefreshTokenExpiryTime { get; set; }
-    public bool IsDeleted { get; set; }
 }
