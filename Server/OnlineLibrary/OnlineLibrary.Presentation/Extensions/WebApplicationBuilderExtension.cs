@@ -1,6 +1,10 @@
 using System.Reflection;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
+using OnlineLibrary.BLL.Infrastructure.Services.Implementation;
+using OnlineLibrary.BLL.Infrastructure.Services.Interfaces;
+using OnlineLibrary.BLL.UseCases.Implementation.User;
+using OnlineLibrary.BLL.UseCases.Interfaces.User;
 using OnlineLibrary.DAL.Infrastructure;
 using OnlineLibrary.DAL.Infrastructure.Implementations;
 using OnlineLibrary.DAL.Infrastructure.Interfaces;
@@ -17,10 +21,22 @@ public static class WebApplicationBuilderExtension
 
         builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+        //Repositories
         builder.Services.AddScoped<IBookRepository, BookRepository>();
         builder.Services.AddScoped<ILoanRepository, LoanRepository>();
         builder.Services.AddScoped<IRoleRepository, RoleRepository>();
         builder.Services.AddScoped<IUserRepository, UserRepository>();
+        
+        //Services
+        builder.Services.AddScoped<IPasswordService, PasswordService>();
+        builder.Services.AddScoped<ITokenService, TokenService>();
+        
+        //User use cases
+        builder.Services.AddScoped<IGetAllUsersUseCase, GetAllUsersUseCase>();
+        builder.Services.AddScoped<ILoginUseCase, LoginUseCase>();
+        builder.Services.AddScoped<IRefreshTokenUseCase, RefreshTokenUseCase>();
+        builder.Services.AddScoped<IRegisterUseCase, RegisterUseCase>();
+        builder.Services.AddScoped<IRevokeUseCase, RevokeUseCase>();
     }
     
     public static void AddMapping(this WebApplicationBuilder builder)
