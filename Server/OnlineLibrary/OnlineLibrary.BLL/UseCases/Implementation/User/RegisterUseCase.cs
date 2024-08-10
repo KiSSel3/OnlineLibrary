@@ -34,10 +34,9 @@ public class RegisterUseCase : IRegisterUseCase
 
         var newUser = await CreateNewUserAsync(userRequestDto, cancellationToken);
         await AssignRoleToUserAsync("User", newUser.Id, cancellationToken);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         var accessToken = await GenerateAccessTokenAsync(newUser, cancellationToken);
-        
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
         
         return new TokenResponseDTO() { RefreshToken = newUser.RefreshToken, AccessToken = accessToken };
     }
