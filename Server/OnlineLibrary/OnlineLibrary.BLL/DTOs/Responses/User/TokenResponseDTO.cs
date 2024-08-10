@@ -1,0 +1,7 @@
+namespace OnlineLibrary.BLL.DTOs.Responses.User;
+
+public class TokenResponseDTO
+{
+    public string AccessToken { get; set; }
+    public string RefreshToken { get; set; }
+}

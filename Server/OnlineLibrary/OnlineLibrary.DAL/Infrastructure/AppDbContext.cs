@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using OnlineLibrary.DAL.Infrastructure.Configurations;
+using OnlineLibrary.DAL.Infrastructure.Extensions;
 using OnlineLibrary.Domain.Entities;
 
 namespace OnlineLibrary.DAL.Infrastructure;
@@ -30,5 +31,7 @@ public class AppDbContext : DbContext
         modelBuilder.ApplyConfiguration(new RoleEntityConfiguration());
         modelBuilder.ApplyConfiguration(new UserEntityConfiguration());
         modelBuilder.ApplyConfiguration(new UserRoleEntityConfiguration());
+        
+        modelBuilder.SeedUsersRolesData();
     }
 }

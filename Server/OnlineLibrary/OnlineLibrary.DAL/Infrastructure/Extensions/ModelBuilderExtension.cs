@@ -15,11 +15,12 @@ public static class ModelBuilderExtension
         });
 
         var adminUserId = new Guid("6DC74677-D3B2-4DB9-B6C7-FF09B8720CD7");
-        modelBuilder.Entity<RoleEntity>().HasData(new UserEntity
+        modelBuilder.Entity<UserEntity>().HasData(new UserEntity
         {
             Id = adminUserId,
             Login = "Admin",
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Admin"),
+            RefreshToken = "",
             RefreshTokenExpiryTime = DateTime.MinValue
         });
 

@@ -31,13 +31,18 @@ public class UnitOfWork : IUnitOfWork
     
     public TRepository GetCustomRepository<TRepository>() where TRepository : class
     {
-        var customRepository = _dbContext.GetService<TRepository>();
-        if (customRepository != null)
+        var type = typeof(TRepository);
+        if (!_repositories.TryGetValue(type, out var customRepository))
         {
-            return customRepository;
+            customRepository = _dbContext.GetService<TRepository>();
+            if (customRepository == null)
+            {
+                throw new NotImplementedException($"No repository found for type {type.FullName}");
+            }
+            _repositories[type] = customRepository;
         }
-        
-        throw new NotImplementedException($"No repository found for type {typeof(TRepository).FullName}");
+
+        return (TRepository)customRepository;
     }
 
     public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

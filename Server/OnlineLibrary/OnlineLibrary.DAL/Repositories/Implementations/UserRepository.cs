@@ -48,4 +48,10 @@ public class UserRepository : IUserRepository
         return await _dbContext.Users
             .FirstOrDefaultAsync(u => u.Login == login && !u.IsDeleted, cancellationToken);
     }
+
+    public async Task<UserEntity> GetByRefreshTokenAsync(string refreshToken, CancellationToken cancellationToken = default)
+    {
+        return await _dbContext.Users
+            .FirstOrDefaultAsync(u => u.RefreshToken == refreshToken && !u.IsDeleted, cancellationToken);
+    }
 }

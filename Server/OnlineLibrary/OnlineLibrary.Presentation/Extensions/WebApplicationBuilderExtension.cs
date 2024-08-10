@@ -1,3 +1,5 @@
+using System.Reflection;
+using Mapster;
 using Microsoft.EntityFrameworkCore;
 using OnlineLibrary.DAL.Infrastructure;
 using OnlineLibrary.DAL.Infrastructure.Implementations;
@@ -19,6 +21,12 @@ public static class WebApplicationBuilderExtension
         builder.Services.AddScoped<ILoanRepository, LoanRepository>();
         builder.Services.AddScoped<IRoleRepository, RoleRepository>();
         builder.Services.AddScoped<IUserRepository, UserRepository>();
+    }
+    
+    public static void AddMapping(this WebApplicationBuilder builder)
+    {
+        TypeAdapterConfig.GlobalSettings.Scan(Assembly.GetExecutingAssembly());
+        builder.Services.AddMapster();
     }
     public static void AddDataBase(this WebApplicationBuilder builder)
     {
