@@ -19,7 +19,7 @@ public class GetGenreByIdUseCase : IGetGenreByIdUseCase
         _mapper = mapper;
     }
 
-    public async Task<GenreCommonDTO> ExecuteAsync(Guid genreId, CancellationToken cancellationToken = default)
+    public async Task<GenreDTO> ExecuteAsync(Guid genreId, CancellationToken cancellationToken = default)
     {
         var genre = await _unitOfWork.GetBaseRepository<GenreEntity>().GetByIdAsync(genreId, cancellationToken);
         if (genre == null)
@@ -27,6 +27,6 @@ public class GetGenreByIdUseCase : IGetGenreByIdUseCase
             throw new EntityNotFoundException("Genre", genreId);
         }
 
-        return _mapper.Map<GenreCommonDTO>(genre);
+        return _mapper.Map<GenreDTO>(genre);
     }
 }

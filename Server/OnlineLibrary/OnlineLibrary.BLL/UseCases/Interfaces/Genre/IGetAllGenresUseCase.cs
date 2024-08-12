@@ -4,5 +4,5 @@ namespace OnlineLibrary.BLL.UseCases.Interfaces.Genre;
 
 public interface IGetAllGenresUseCase
 {
-    Task<IEnumerable<GenreCommonDTO>> ExecuteAsync(CancellationToken cancellationToken = default);
+    Task<IEnumerable<GenreDTO>> ExecuteAsync(CancellationToken cancellationToken = default);
 }

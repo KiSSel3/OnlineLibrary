@@ -4,5 +4,5 @@ namespace OnlineLibrary.BLL.UseCases.Interfaces.Genre;
 
 public interface IUpdateGenreUseCase
 {
-    Task ExecuteAsync(GenreCommonDTO genreCommonDTO, CancellationToken cancellationToken = default);
+    Task ExecuteAsync(GenreDTO genreDto, CancellationToken cancellationToken = default);
 }

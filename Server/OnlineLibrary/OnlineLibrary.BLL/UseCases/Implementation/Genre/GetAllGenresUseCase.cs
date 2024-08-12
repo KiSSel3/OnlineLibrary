@@ -17,9 +17,9 @@ public class GetAllGenresUseCase : IGetAllGenresUseCase
         _mapper = mapper;
     }
 
-    public async Task<IEnumerable<GenreCommonDTO>> ExecuteAsync(CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<GenreDTO>> ExecuteAsync(CancellationToken cancellationToken = default)
     {
         var genres = await _unitOfWork.GetBaseRepository<GenreEntity>().GetAllAsync(cancellationToken);
-        return _mapper.Map<IEnumerable<GenreCommonDTO>>(genres);
+        return _mapper.Map<IEnumerable<GenreDTO>>(genres);
     }
 }
