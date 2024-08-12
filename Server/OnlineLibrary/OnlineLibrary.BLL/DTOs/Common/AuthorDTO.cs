@@ -1,6 +1,6 @@
-namespace OnlineLibrary.BLL.DTOs.Request.Author;
+namespace OnlineLibrary.BLL.DTOs.Common;
 
-public class AuthorCreateRequestDTO
+public class AuthorDTO
 {
     public string FirstName { get; set; }
     public string LastName { get; set; }

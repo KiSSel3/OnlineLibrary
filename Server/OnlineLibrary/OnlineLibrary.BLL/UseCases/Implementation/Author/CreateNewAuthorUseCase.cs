@@ -1,4 +1,5 @@
 using MapsterMapper;
+using OnlineLibrary.BLL.DTOs.Common;
 using OnlineLibrary.BLL.DTOs.Request.Author;
 using OnlineLibrary.BLL.UseCases.Interfaces.Author;
 using OnlineLibrary.DAL.Infrastructure.Interfaces;
@@ -17,9 +18,9 @@ public class CreateNewAuthorUseCase : ICreateNewAuthorUseCase
         _mapper = mapper;
     }
 
-    public async Task ExecuteAsync(AuthorCreateRequestDTO authorRequestDTO, CancellationToken cancellationToken = default)
+    public async Task ExecuteAsync(AuthorDTO authorDTO, CancellationToken cancellationToken = default)
     {
-        var newAuthor = _mapper.Map<AuthorEntity>(authorRequestDTO);
+        var newAuthor = _mapper.Map<AuthorEntity>(authorDTO);
 
         await _unitOfWork.GetBaseRepository<AuthorEntity>().CreateAsync(newAuthor, cancellationToken);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
