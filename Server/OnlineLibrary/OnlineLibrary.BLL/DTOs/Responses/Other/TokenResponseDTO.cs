@@ -1,4 +1,4 @@
-namespace OnlineLibrary.BLL.DTOs.Responses.User;
+namespace OnlineLibrary.BLL.DTOs.Responses.Other;
 
 public class TokenResponseDTO
 {

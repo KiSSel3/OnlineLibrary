@@ -3,7 +3,6 @@ using OnlineLibrary.BLL.DTOs.Responses.User;
 using OnlineLibrary.BLL.UseCases.Interfaces.User;
 using OnlineLibrary.DAL.Infrastructure.Interfaces;
 using OnlineLibrary.DAL.Repositories.Interfaces;
-using OnlineLibrary.Domain.Entities;
 
 namespace OnlineLibrary.BLL.UseCases.Implementation.User;
 
