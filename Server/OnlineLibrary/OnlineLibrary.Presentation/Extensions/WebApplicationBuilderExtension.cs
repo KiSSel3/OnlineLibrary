@@ -1,4 +1,6 @@
 using System.Reflection;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
 using OnlineLibrary.BLL.Infrastructure.Services.Implementation;
@@ -8,6 +10,7 @@ using OnlineLibrary.BLL.UseCases.Implementation.Book;
 using OnlineLibrary.BLL.UseCases.Implementation.Genre;
 using OnlineLibrary.BLL.UseCases.Implementation.Loan;
 using OnlineLibrary.BLL.UseCases.Implementation.Role;
+using OnlineLibrary.BLL.Infrastructure.Validators;
 using OnlineLibrary.BLL.UseCases.Implementation.User;
 using OnlineLibrary.BLL.UseCases.Interfaces.Author;
 using OnlineLibrary.BLL.UseCases.Interfaces.Book;
@@ -89,6 +92,15 @@ public static class WebApplicationBuilderExtension
         TypeAdapterConfig.GlobalSettings.Scan(Assembly.GetExecutingAssembly());
         builder.Services.AddMapster();
     }
+    
+    public static void AddValidation(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddFluentValidationAutoValidation();
+
+        builder.Services.AddValidatorsFromAssemblyContaining<AuthorDTOValidator>();
+    }
+
+    
     public static void AddDataBase(this WebApplicationBuilder builder)
     {
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
