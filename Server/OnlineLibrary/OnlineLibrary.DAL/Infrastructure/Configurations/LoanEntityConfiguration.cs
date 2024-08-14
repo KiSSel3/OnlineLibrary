@@ -14,14 +14,5 @@ public class LoanEntityConfiguration : BaseEntityConfiguration<LoanEntity>
         builder.Property(l => l.BorrowedAt).IsRequired();
         builder.Property(l => l.ReturnBy).IsRequired();
         builder.Property(l => l.IsDeleted).IsRequired();
-        
-        //TODO: Delete or Fix
-        /*builder.HasOne<BookEntity>()
-            .WithMany()
-            .HasForeignKey(l => l.BookId);
-        
-        builder.HasOne<UserEntity>()
-            .WithMany()
-            .HasForeignKey(l => l.UserId);*/
     }
 }

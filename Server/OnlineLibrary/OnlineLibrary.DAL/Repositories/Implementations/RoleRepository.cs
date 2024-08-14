@@ -51,7 +51,6 @@ public class RoleRepository : IRoleRepository
 
     public async Task<IEnumerable<RoleEntity>> GetRolesByUserIdAsync(Guid userId, CancellationToken cancellationToken = default)
     {
-        //TODO: It may be necessary to modify it to use navigation properties
         return await _dbContext.UsersRoles
             .Where(ur => ur.UserId == userId && !ur.IsDeleted)
             .Join(_dbContext.Roles,

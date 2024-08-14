@@ -1,4 +1,5 @@
 using MapsterMapper;
+using Microsoft.Extensions.Caching.Memory;
 using OnlineLibrary.BLL.DTOs.Common;
 using OnlineLibrary.BLL.DTOs.Responses.Book;
 using OnlineLibrary.BLL.Exceptions;
@@ -9,20 +10,47 @@ using OnlineLibrary.Domain.Entities;
 
 namespace OnlineLibrary.BLL.UseCases.Implementation.Book;
 
-
-//TODO: Refactoring
 public class GetBookByIsbnUseCase : IGetBookByIsbnUseCase
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
+    private readonly IMemoryCache _cache;
 
-    public GetBookByIsbnUseCase(IUnitOfWork unitOfWork, IMapper mapper)
+    public GetBookByIsbnUseCase(IUnitOfWork unitOfWork, IMapper mapper, IMemoryCache cache)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
+        _cache = cache;
     }
 
     public async Task<BookDetailsResponseDTO> ExecuteAsync(string isbn, CancellationToken cancellationToken = default)
+    {
+        var cacheKey = $"BookDetails_{isbn}";
+        
+        if (!_cache.TryGetValue(cacheKey, out BookDetailsResponseDTO cachedBookDetails))
+        {
+            var book = await GetBookByIsbnAsync(isbn, cancellationToken);
+            var genre = await GetGenreByIdAsync(book.GenreId, cancellationToken);
+            var author = await GetAuthorByIdAsync(book.AuthorId, cancellationToken);
+            
+            cachedBookDetails = new BookDetailsResponseDTO
+            {
+                AuthorDTO = _mapper.Map<AuthorDTO>(author),
+                BookDTO = _mapper.Map<BookDTO>(book),
+                GenreDTO = _mapper.Map<GenreDTO>(genre),
+                Image = book.Image
+            };
+            
+            var cacheEntryOptions = new MemoryCacheEntryOptions()
+                .SetSlidingExpiration(TimeSpan.FromMinutes(30));
+            
+            _cache.Set(cacheKey, cachedBookDetails, cacheEntryOptions);
+        }
+        
+        return cachedBookDetails;
+    }
+
+    private async Task<BookEntity> GetBookByIsbnAsync(string isbn, CancellationToken cancellationToken)
     {
         var book = await _unitOfWork.GetCustomRepository<IBookRepository>().GetByISBNAsync(isbn, cancellationToken);
         if (book == null)
@@ -30,26 +58,28 @@ public class GetBookByIsbnUseCase : IGetBookByIsbnUseCase
             throw new EntityNotFoundException($"Can't find Book with ISBN {isbn}.\"");
         }
 
-        var genre = await _unitOfWork.GetBaseRepository<GenreEntity>().GetByIdAsync(book.GenreId, cancellationToken);
+        return book;
+    }
+
+    private async Task<GenreEntity> GetGenreByIdAsync(Guid genreId, CancellationToken cancellationToken)
+    {
+        var genre = await _unitOfWork.GetBaseRepository<GenreEntity>().GetByIdAsync(genreId, cancellationToken);
         if (genre == null)
         {
-            throw new EntityNotFoundException("Genre", book.GenreId);
-        }
-        
-        var author = await _unitOfWork.GetBaseRepository<AuthorEntity>().GetByIdAsync(book.AuthorId, cancellationToken);
-        if (author == null)
-        {
-            throw new EntityNotFoundException("Author", book.AuthorId);
+            throw new EntityNotFoundException("Genre", genreId);
         }
 
-        var bookDetailsDTO = new BookDetailsResponseDTO
+        return genre;
+    }
+
+    private async Task<AuthorEntity> GetAuthorByIdAsync(Guid authorId, CancellationToken cancellationToken)
+    {
+        var author = await _unitOfWork.GetBaseRepository<AuthorEntity>().GetByIdAsync(authorId, cancellationToken);
+        if (author == null)
         {
-            AuthorDTO = _mapper.Map<AuthorDTO>(author),
-            BookDTO = _mapper.Map<BookDTO>(book),
-            GenreDTO = _mapper.Map<GenreDTO>(genre),
-            Image = book.Image
-        };
-        
-        return bookDetailsDTO;
+            throw new EntityNotFoundException("Author", authorId);
+        }
+
+        return author;
     }
 }

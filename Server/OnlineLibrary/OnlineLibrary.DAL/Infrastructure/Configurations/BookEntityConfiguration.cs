@@ -15,14 +15,5 @@ public class BookEntityConfiguration : BaseEntityConfiguration<BookEntity>
         builder.Property(b => b.GenreId).IsRequired();
         builder.Property(b => b.AuthorId).IsRequired();
         builder.Property(b => b.IsDeleted).IsRequired();
-
-        //TODO: Delete or Fix
-        /*builder.HasOne<AuthorEntity>()
-            .WithMany()
-            .HasForeignKey(b => b.AuthorId);
-        
-        builder.HasOne<GenreEntity>()
-            .WithMany()
-            .HasForeignKey(b => b.GenreId);*/
     }
 }

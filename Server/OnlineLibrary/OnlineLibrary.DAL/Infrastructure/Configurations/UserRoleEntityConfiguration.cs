@@ -12,14 +12,5 @@ public class UserRoleEntityConfiguration : BaseEntityConfiguration<UserRoleEntit
         builder.Property(ur => ur.UserId).IsRequired();
         builder.Property(ur => ur.RoleId).IsRequired();
         builder.Property(ur => ur.IsDeleted).IsRequired();
-
-        //TODO: Delete or Fix
-        /*builder.HasOne<UserEntity>()
-            .WithMany()
-            .HasForeignKey(ur => ur.UserId);
-
-        builder.HasOne<RoleEntity>()
-            .WithMany()
-            .HasForeignKey(ur => ur.RoleId);*/
     }
 }
