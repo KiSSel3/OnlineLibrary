@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using OnlineLibrary.BLL.DTOs.Request.Book;
 using OnlineLibrary.BLL.UseCases.Interfaces.Book;
 
@@ -19,10 +20,23 @@ public class BookController : Controller
         _getBookByIsbnUseCase = getBookByIsbnUseCase;
     }
 
-    [HttpGet("get-all")]
+    [HttpPost("get-all")]
     public async Task<IActionResult> GetAllAsync([FromBody] BookParametersRequestDTO bookParametersRequestDTO, CancellationToken cancellationToken = default)
     {
         var books = await _getAllBooksUseCase.ExecuteAsync(bookParametersRequestDTO, cancellationToken);
+        
+        var metadata = new
+        {
+            books.TotalCount,
+            books.PageSize,
+            books.CurrentPage,
+            books.TotalPages,
+            books.HasNext,
+            books.HasPrevious
+        };
+
+        Response.Headers.Append("X-Pagination", JsonConvert.SerializeObject(metadata));
+        
         return Ok(books);
     }
 

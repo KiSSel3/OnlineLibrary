@@ -11,6 +11,14 @@ public class PagedList<T> : List<T>
 
     public bool HasPrevious => CurrentPage > 1;
     public bool HasNext => CurrentPage < TotalPages;
+
+    public PagedList() : base()
+    {
+        TotalCount = 0;
+        PageSize = 0;
+        CurrentPage = 0;
+        TotalPages = 0;
+    }
     
     public PagedList(List<T> items, int count, int pageNumber, int pageSize)
     {
