@@ -49,12 +49,6 @@ public class GetBookByISBNUseCase : IGetBookByISBNUseCase
             GenreDTO = _mapper.Map<GenreDTO>(genre),
             Image = book.Image
         };
-
-        var loan = await _unitOfWork.GetCustomRepository<ILoanRepository>().GetByBookIdAsync(book.Id, cancellationToken);
-        if (loan != null)
-        {
-            bookDetailsDTO.IsAvailable = false;
-        }
         
         return bookDetailsDTO;
     }

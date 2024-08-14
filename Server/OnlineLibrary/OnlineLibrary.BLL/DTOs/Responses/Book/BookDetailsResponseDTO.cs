@@ -9,6 +9,4 @@ public class BookDetailsResponseDTO
     public AuthorDTO AuthorDTO { get; set; }
     
     public byte[] Image { get; set; }
-    
-    public bool IsAvailable { get; set; }
 }

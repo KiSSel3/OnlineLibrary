@@ -49,12 +49,6 @@ public class GetBookByIdUseCase : IGetBookByIdUseCase
             Image = book.Image
         };
 
-        var loan = await _unitOfWork.GetCustomRepository<ILoanRepository>().GetByBookIdAsync(bookId, cancellationToken);
-        if (loan != null)
-        {
-            bookDetailsDTO.IsAvailable = false;
-        }
-        
         return bookDetailsDTO;
     }
 }
