@@ -44,7 +44,6 @@ public class UserController : Controller
         return Ok();
     }
     
-    [Authorize]
     [HttpPost("refresh-token")]
     public async Task<IActionResult> RefreshTokenAsync([FromBody] string refreshToken, CancellationToken cancellationToken)
     {

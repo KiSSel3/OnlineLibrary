@@ -1,8 +1,12 @@
 using System.Reflection;
+using System.Text;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Mapster;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using OnlineLibrary.BLL.Infrastructure.Services.Implementation;
 using OnlineLibrary.BLL.Infrastructure.Services.Interfaces;
 using OnlineLibrary.BLL.UseCases.Implementation.Author;
@@ -87,6 +91,49 @@ public static class WebApplicationBuilderExtension
         builder.Services.AddScoped<IUpdateAuthorUseCase, UpdateAuthorUseCase>();
     }
     
+    public static void AddAuthentication(this WebApplicationBuilder builder)
+    {
+        var jwtSettings = builder.Configuration.GetSection("Jwt");
+
+        var key = Encoding.UTF8.GetBytes(jwtSettings["Secret"]);
+        var issuer = jwtSettings["Issuer"];
+        var audience = jwtSettings["Audience"];
+
+        builder.Services.AddAuthentication(options =>
+        {
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        }).AddJwtBearer(options =>
+        {
+            options.RequireHttpsMetadata = false;
+            options.SaveToken = true;
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateIssuerSigningKey = true,
+                ValidIssuer = issuer,
+                ValidAudience = audience,
+                IssuerSigningKey = new SymmetricSecurityKey(key),
+            };
+        });
+        
+        builder.Services.AddAuthorization(options => options.DefaultPolicy =
+            new AuthorizationPolicyBuilder
+                    (JwtBearerDefaults.AuthenticationScheme)
+                .RequireAuthenticatedUser()
+                .Build());
+        
+        builder.Services.AddAuthorization(options =>
+        {
+            options.AddPolicy("AdminArea", policy =>
+            {
+                policy.RequireAuthenticatedUser();
+                policy.RequireRole("Admin");
+            });
+        });
+    }
+    
     public static void AddMapping(this WebApplicationBuilder builder)
     {
         TypeAdapterConfig.GlobalSettings.Scan(Assembly.GetExecutingAssembly());
@@ -99,7 +146,6 @@ public static class WebApplicationBuilderExtension
 
         builder.Services.AddValidatorsFromAssemblyContaining<AuthorDTOValidator>();
     }
-
     
     public static void AddDataBase(this WebApplicationBuilder builder)
     {

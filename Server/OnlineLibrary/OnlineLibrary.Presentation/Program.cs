@@ -8,6 +8,7 @@ builder.Services.AddSwaggerGen();
 builder.AddDataBase();
 builder.AddMapping();
 builder.AddServices();
+builder.AddValidation();
 
 var app = builder.Build();
 
