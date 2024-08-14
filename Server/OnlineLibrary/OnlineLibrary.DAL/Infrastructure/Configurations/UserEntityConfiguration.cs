@@ -11,6 +11,7 @@ public class UserEntityConfiguration : BaseEntityConfiguration<UserEntity>
         
         builder.Property(u => u.Login).IsRequired().HasMaxLength(100);
         builder.Property(u => u.PasswordHash).IsRequired();
+        builder.Property(u => u.Email).IsRequired().HasMaxLength(255);
         builder.Property(u => u.RefreshToken).HasMaxLength(500);
         builder.Property(u => u.RefreshTokenExpiryTime).IsRequired();
         builder.Property(u => u.IsDeleted).IsRequired();

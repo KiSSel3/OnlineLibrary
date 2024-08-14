@@ -20,6 +20,7 @@ public static class ModelBuilderExtension
             Id = adminUserId,
             Login = "Admin",
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Admin"),
+            Email = "admin@gmail.com",
             RefreshToken = "",
             RefreshTokenExpiryTime = DateTime.MinValue
         });

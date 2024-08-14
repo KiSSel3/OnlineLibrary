@@ -39,6 +39,8 @@ public static class WebApplicationBuilderExtension
 
         builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+        builder.Services.AddMemoryCache();
+        
         //Repositories
         builder.Services.AddScoped<IBookRepository, BookRepository>();
         builder.Services.AddScoped<ILoanRepository, LoanRepository>();
