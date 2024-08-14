@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineLibrary.BLL.DTOs.Request.User;
 using OnlineLibrary.BLL.UseCases.Interfaces.User;
@@ -11,12 +12,14 @@ public class UserController : Controller
     private readonly ILoginUseCase _loginUseCase;
     private readonly IRegisterUseCase _registerUseCase;
     private readonly IRefreshTokenUseCase _refreshTokenUseCase;
+    private readonly IRevokeUseCase _revokeUseCase;
 
-    public UserController(ILoginUseCase loginUseCase, IRegisterUseCase registerUseCase, IRefreshTokenUseCase refreshTokenUseCase)
+    public UserController(ILoginUseCase loginUseCase, IRegisterUseCase registerUseCase, IRefreshTokenUseCase refreshTokenUseCase, IRevokeUseCase revokeUseCase)
     {
         _loginUseCase = loginUseCase;
         _registerUseCase = registerUseCase;
         _refreshTokenUseCase = refreshTokenUseCase;
+        _revokeUseCase = revokeUseCase;
     }
 
     [HttpPost("login")]
@@ -31,5 +34,21 @@ public class UserController : Controller
     {
         var tokenResponseDTO = await _registerUseCase.ExecuteAsync(userRequestDTO, cancellationToken);
         return Ok(tokenResponseDTO);
+    }
+    
+    [Authorize]
+    [HttpDelete("logout/{userId}")]
+    public async Task<IActionResult> LogoutAsync(Guid userId, CancellationToken cancellationToken)
+    {
+        await _revokeUseCase.ExecuteAsync(userId, cancellationToken);
+        return Ok();
+    }
+    
+    [Authorize]
+    [HttpPost("refresh-token")]
+    public async Task<IActionResult> RefreshTokenAsync([FromBody] string refreshToken, CancellationToken cancellationToken)
+    {
+        var token = await _refreshTokenUseCase.ExecuteAsync(refreshToken, cancellationToken);
+        return Ok(token);
     }
 }
