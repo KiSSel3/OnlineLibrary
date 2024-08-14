@@ -43,6 +43,12 @@ public class BookRepository : IBookRepository
         _dbContext.Books.Update(entity);
     }
 
+    public async Task<BookEntity> GetByISBNAsync(string isbn, CancellationToken cancellationToken)
+    {
+        return await _dbContext.Books
+            .FirstOrDefaultAsync(b => b.ISBN == isbn && !b.IsDeleted, cancellationToken);
+    }
+
     public IQueryable<BookEntity> GetBooksQueryable()
     {
         return _dbContext.Books

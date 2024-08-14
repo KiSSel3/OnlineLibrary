@@ -55,4 +55,10 @@ public class LoanRepository : ILoanRepository
             .Where(l => l.UserId == userId && !l.IsDeleted)
             .ToListAsync(cancellationToken);
     }
+
+    public async Task<bool> IsBookAvailableAsync(Guid bookId, CancellationToken cancellationToken = default)
+    {
+        return await _dbContext.Loans
+            .AllAsync(l => l.BookId != bookId || l.IsDeleted, cancellationToken);
+    }
 }

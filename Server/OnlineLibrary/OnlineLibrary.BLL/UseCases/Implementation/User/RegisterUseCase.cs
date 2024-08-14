@@ -1,7 +1,7 @@
 using MapsterMapper;
 using Microsoft.Extensions.Configuration;
 using OnlineLibrary.BLL.DTOs.Request.User;
-using OnlineLibrary.BLL.DTOs.Responses.User;
+using OnlineLibrary.BLL.DTOs.Responses.Other;
 using OnlineLibrary.BLL.Exceptions;
 using OnlineLibrary.BLL.Infrastructure.Services.Interfaces;
 using OnlineLibrary.BLL.UseCases.Interfaces.User;
@@ -34,10 +34,9 @@ public class RegisterUseCase : IRegisterUseCase
 
         var newUser = await CreateNewUserAsync(userRequestDto, cancellationToken);
         await AssignRoleToUserAsync("User", newUser.Id, cancellationToken);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         var accessToken = await GenerateAccessTokenAsync(newUser, cancellationToken);
-        
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
         
         return new TokenResponseDTO() { RefreshToken = newUser.RefreshToken, AccessToken = accessToken };
     }

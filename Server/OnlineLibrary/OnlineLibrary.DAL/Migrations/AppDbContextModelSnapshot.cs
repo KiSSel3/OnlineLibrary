@@ -76,6 +76,10 @@ namespace OnlineLibrary.DAL.Migrations
                         .HasMaxLength(13)
                         .HasColumnType("character varying(13)");
 
+                    b.Property<byte[]>("Image")
+                        .IsRequired()
+                        .HasColumnType("bytea");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
@@ -151,6 +155,20 @@ namespace OnlineLibrary.DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("f8f16246-ce18-4f8f-9657-ab5c95dd0fc4"),
+                            IsDeleted = false,
+                            Name = "Admin"
+                        },
+                        new
+                        {
+                            Id = new Guid("abbe8643-6536-4550-ae9b-2bc07f94bd36"),
+                            IsDeleted = false,
+                            Name = "User"
+                        });
                 });
 
             modelBuilder.Entity("OnlineLibrary.Domain.Entities.UserEntity", b =>
@@ -182,6 +200,17 @@ namespace OnlineLibrary.DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("6dc74677-d3b2-4db9-b6c7-ff09b8720cd7"),
+                            IsDeleted = false,
+                            Login = "Admin",
+                            PasswordHash = "$2b$10$lq5/aYUWyNHY.LmkR8ns2.GIaVE8zvSWZO5ppLe7oq5ePL9B0zZyC",
+                            RefreshToken = "",
+                            RefreshTokenExpiryTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
                 });
 
             modelBuilder.Entity("OnlineLibrary.Domain.Entities.UserRoleEntity", b =>
@@ -202,6 +231,15 @@ namespace OnlineLibrary.DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("UsersRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("9dd95e46-c605-4083-97e1-c9a538f84282"),
+                            IsDeleted = false,
+                            RoleId = new Guid("f8f16246-ce18-4f8f-9657-ab5c95dd0fc4"),
+                            UserId = new Guid("6dc74677-d3b2-4db9-b6c7-ff09b8720cd7")
+                        });
                 });
 #pragma warning restore 612, 618
         }
