@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using OnlineLibrary.BLL.DTOs.Request.Loan;
@@ -28,6 +29,7 @@ public class LoanController : Controller
         return Ok(isAvailable);
     }
 
+    [Authorize]
     [HttpPost("create-loan")]
     public async Task<IActionResult> CreateNewLoanAsync([FromBody] LoanCreateRequestDTO loanRequestDTO, CancellationToken cancellationToken)
     {
@@ -35,6 +37,7 @@ public class LoanController : Controller
         return Ok();
     }
 
+    [Authorize]
     [HttpGet("get-user-loans/{userId}")]
     public async Task<IActionResult> GetLoansByUserIdAsync(Guid userId, CancellationToken cancellationToken)
     {
