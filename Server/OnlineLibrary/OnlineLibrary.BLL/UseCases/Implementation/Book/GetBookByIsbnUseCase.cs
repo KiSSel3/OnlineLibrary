@@ -11,12 +11,12 @@ namespace OnlineLibrary.BLL.UseCases.Implementation.Book;
 
 
 //TODO: Refactoring
-public class GetBookByISBNUseCase : IGetBookByISBNUseCase
+public class GetBookByIsbnUseCase : IGetBookByIsbnUseCase
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
 
-    public GetBookByISBNUseCase(IUnitOfWork unitOfWork, IMapper mapper)
+    public GetBookByIsbnUseCase(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
