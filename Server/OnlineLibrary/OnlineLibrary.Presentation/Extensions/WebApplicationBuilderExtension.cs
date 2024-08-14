@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using OnlineLibrary.BLL.Infrastructure.Services.Implementation;
 using OnlineLibrary.BLL.Infrastructure.Services.Interfaces;
 using OnlineLibrary.BLL.UseCases.Implementation.Author;
@@ -155,6 +156,42 @@ public static class WebApplicationBuilderExtension
         builder.Services.AddDbContext<AppDbContext>(options =>
         {
             options.UseNpgsql(dataBaseConnection);
+        });
+    }
+    
+    public static void AddSwaggerDocumentation(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen(options =>
+        {
+            options.AddSecurityDefinition(
+                "Bearer",
+                new OpenApiSecurityScheme
+                {
+                    Description = @"Enter JWT Token please.",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                    BearerFormat = "JWT",
+                    Scheme = "Bearer"
+                }
+            );
+            options.AddSecurityRequirement(
+                new OpenApiSecurityRequirement()
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            },
+                        },
+                        new List<string>()
+                    }
+                }
+            );
         });
     }
 }
