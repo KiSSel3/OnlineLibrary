@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using OnlineLibrary.BLL.Infrastructure.BackgroundServices;
 using OnlineLibrary.BLL.Infrastructure.Services.Implementation;
 using OnlineLibrary.BLL.Infrastructure.Services.Interfaces;
 using OnlineLibrary.BLL.UseCases.Implementation.Author;
@@ -195,5 +196,11 @@ public static class WebApplicationBuilderExtension
                 }
             );
         });
+    }
+
+    public static void AddNotification(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddScoped<INotificationService, EmailNotificationService>();
+        builder.Services.AddHostedService<LoanNotificationService>();
     }
 }
