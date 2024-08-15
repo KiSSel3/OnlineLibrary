@@ -54,7 +54,7 @@ public class EmailNotificationService : INotificationService
             using (var client = new SmtpClient())
             {
                 _logger.LogInformation("Connecting to SMTP server {Server} on port {Port}.", _smtpServer, _smtpPort);
-                await client.ConnectAsync(_smtpServer, _smtpPort, MailKit.Security.SecureSocketOptions.StartTls, cancellationToken);
+                await client.ConnectAsync(_smtpServer, _smtpPort, MailKit.Security.SecureSocketOptions.SslOnConnect, cancellationToken);
                 
                 _logger.LogInformation("Authenticating with SMTP server.");
                 await client.AuthenticateAsync(_smtpUser, _smtpPass, cancellationToken);
