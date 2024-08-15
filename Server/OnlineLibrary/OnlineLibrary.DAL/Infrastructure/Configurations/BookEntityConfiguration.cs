@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using OnlineLibrary.Domain.Entities;
 
@@ -15,5 +16,7 @@ public class BookEntityConfiguration : BaseEntityConfiguration<BookEntity>
         builder.Property(b => b.GenreId).IsRequired();
         builder.Property(b => b.AuthorId).IsRequired();
         builder.Property(b => b.IsDeleted).IsRequired();
+        
+        builder.Property(e => e.Image).IsRequired(false).HasColumnType("bytea");
     }
 }

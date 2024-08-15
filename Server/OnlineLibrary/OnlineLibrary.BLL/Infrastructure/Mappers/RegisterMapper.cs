@@ -7,16 +7,17 @@ using OnlineLibrary.BLL.DTOs.Request.User;
 using OnlineLibrary.BLL.DTOs.Responses.Author;
 using OnlineLibrary.BLL.DTOs.Responses.Book;
 using OnlineLibrary.BLL.DTOs.Responses.User;
+using OnlineLibrary.BLL.Infrastructure.Helpers;
 using OnlineLibrary.Domain.Entities;
 
 namespace OnlineLibrary.BLL.Infrastructure.Mappers;
 
-public static class MapsterConfig
+public class RegisterMapper : IRegister
 {
-    public static void Configure()
+    public void Register(TypeAdapterConfig config)
     {
         //Author
-        TypeAdapterConfig<AuthorEntity, AuthorResponseDTO>.NewConfig()
+        config.NewConfig<AuthorEntity, AuthorResponseDTO>()
             .Map(dest => dest.Id, src => src.Id)
             .Map(dest => dest.AuthorDTO, src => new AuthorDTO
             {
@@ -26,18 +27,19 @@ public static class MapsterConfig
                 Country = src.Country
             });
         
-        TypeAdapterConfig<AuthorUpdateRequestDTO, AuthorEntity>.NewConfig()
+        config.NewConfig<AuthorUpdateRequestDTO, AuthorEntity>()
             .Map(dest => dest.Id, src => src.Id)
             .Map(dest => dest.FirstName, src => src.AuthorDTO.FirstName)
             .Map(dest => dest.LastName, src => src.AuthorDTO.LastName)
             .Map(dest => dest.DateOfBirth, src => src.AuthorDTO.DateOfBirth)
             .Map(dest => dest.Country, src => src.AuthorDTO.Country);
 
-        TypeAdapterConfig<AuthorDTO, AuthorEntity>.NewConfig();
-        TypeAdapterConfig<AuthorEntity, AuthorDTO>.NewConfig();
+        config.NewConfig<AuthorDTO, AuthorEntity>()
+            .RequireDestinationMemberSource(true);
+        config.NewConfig<AuthorEntity, AuthorDTO>();
         
         //Book
-        TypeAdapterConfig<BookCreateRequestDTO, BookEntity>.NewConfig()
+        config.NewConfig<BookCreateRequestDTO, BookEntity>()
             .Map(dest => dest.ISBN, src => src.BookDTO.ISBN)
             .Map(dest => dest.Title, src => src.BookDTO.Title)
             .Map(dest => dest.Description, src => src.BookDTO.Description)
@@ -45,7 +47,7 @@ public static class MapsterConfig
             .Map(dest => dest.AuthorId, src => src.AuthorId)
             .Ignore(dest => dest.Image);
 
-        TypeAdapterConfig<BookUpdateRequestDTO, BookEntity>.NewConfig()
+        config.NewConfig<BookUpdateRequestDTO, BookEntity>()
             .Map(dest => dest.Id, src => src.Id)
             .Map(dest => dest.ISBN, src => src.BookDTO.ISBN)
             .Map(dest => dest.Title, src => src.BookDTO.Title)
@@ -54,7 +56,7 @@ public static class MapsterConfig
             .Map(dest => dest.AuthorId, src => src.AuthorId)
             .Ignore(dest => dest.Image);
         
-        TypeAdapterConfig<BookEntity, BookResponseDTO>.NewConfig()
+        config.NewConfig<BookEntity, BookResponseDTO>()
             .Map(dest => dest.Id, src => src.Id)
             .Map(dest => dest.BookDTO, src => new BookDTO
             {
@@ -64,26 +66,27 @@ public static class MapsterConfig
             })
             .Map(dest => dest.Image, src => src.Image);
         
-        TypeAdapterConfig<BookDTO, BookEntity>.NewConfig();
-        TypeAdapterConfig<BookEntity, BookDTO>.NewConfig();
+        config.NewConfig<BookDTO, BookEntity>();
+        config.NewConfig<BookEntity, BookDTO>();
         
         //Genre
-        TypeAdapterConfig<GenreDTO, GenreEntity>.NewConfig();
-        TypeAdapterConfig<GenreEntity, GenreDTO>.NewConfig();
+        config.NewConfig<GenreDTO, GenreEntity>();
+        config.NewConfig<GenreEntity, GenreDTO>();
         
         //Loan
-        TypeAdapterConfig<LoanCreateRequestDTO, LoanEntity>.NewConfig();
+        config.NewConfig<LoanCreateRequestDTO, LoanEntity>();
         
         //Role
-        TypeAdapterConfig<RoleDTO, RoleEntity>.NewConfig();
-        TypeAdapterConfig<RoleEntity, RoleDTO>.NewConfig();
+        config.NewConfig<RoleDTO, RoleEntity>();
+        config.NewConfig<RoleEntity, RoleDTO>();
 
         //UserRole
-        TypeAdapterConfig<UserRoleDTO, UserRoleEntity>.NewConfig();
-        TypeAdapterConfig<UserRoleEntity, UserRoleDTO>.NewConfig();
+        config.NewConfig<UserRoleDTO, UserRoleEntity>();
+        config.NewConfig<UserRoleEntity, UserRoleDTO>();
         
         //User
-        TypeAdapterConfig<UserRequestDTO, UserEntity>.NewConfig();
-        TypeAdapterConfig<UserEntity, UserResponseDTO>.NewConfig();
+        config.NewConfig<LoginRequestDTO, UserEntity>();
+        config.NewConfig<RegisterRequestDTO, UserEntity>();
+        config.NewConfig<UserEntity, UserResponseDTO>();
     }
 }

@@ -4,6 +4,6 @@ namespace OnlineLibrary.BLL.DTOs.Responses.Author;
 
 public class AuthorResponseDTO
 {
-    public AuthorDTO AuthorDTO { get; set; }
     public Guid Id { get; set; }
+    public AuthorDTO AuthorDTO { get; set; }
 }

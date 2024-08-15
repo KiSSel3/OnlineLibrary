@@ -3,9 +3,9 @@ using OnlineLibrary.BLL.DTOs.Request.User;
 
 namespace OnlineLibrary.BLL.Infrastructure.Validators;
 
-public class UserRequestDTOValidator : AbstractValidator<UserRequestDTO>
+public class LoginRequestDTOValidator : AbstractValidator<LoginRequestDTO>
 {
-    public UserRequestDTOValidator()
+    public LoginRequestDTOValidator()
     {
         RuleFor(x => x.Login)
             .NotEmpty().WithMessage("Login is required.")
@@ -14,10 +14,5 @@ public class UserRequestDTOValidator : AbstractValidator<UserRequestDTO>
 
         RuleFor(x => x.Password)
             .NotEmpty().WithMessage("Password is required.");
-        
-        RuleFor(x => x.Email)
-            .NotEmpty().WithMessage("Email is required.")
-            .EmailAddress().WithMessage("Invalid email format.")
-            .MaximumLength(255).WithMessage("Email cannot exceed 255 characters.");
     }
 }

@@ -3,12 +3,14 @@ using System.Text;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Mapster;
+using MapsterMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using OnlineLibrary.BLL.Infrastructure.BackgroundServices;
+using OnlineLibrary.BLL.Infrastructure.Mappers;
 using OnlineLibrary.BLL.Infrastructure.Services.Implementation;
 using OnlineLibrary.BLL.Infrastructure.Services.Interfaces;
 using OnlineLibrary.BLL.UseCases.Implementation.Author;
@@ -138,12 +140,6 @@ public static class WebApplicationBuilderExtension
         });
     }
     
-    public static void AddMapping(this WebApplicationBuilder builder)
-    {
-        TypeAdapterConfig.GlobalSettings.Scan(Assembly.GetExecutingAssembly());
-        builder.Services.AddMapster();
-    }
-    
     public static void AddValidation(this WebApplicationBuilder builder)
     {
         builder.Services.AddFluentValidationAutoValidation();
@@ -202,5 +198,19 @@ public static class WebApplicationBuilderExtension
     {
         builder.Services.AddScoped<INotificationService, EmailNotificationService>();
         builder.Services.AddHostedService<LoanNotificationService>();
+    }
+    
+    public static void AddMapping(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddSingleton(GetConfiguredMappingConfig());
+        builder.Services.AddScoped<IMapper, ServiceMapper>();
+    }
+    private static TypeAdapterConfig GetConfiguredMappingConfig()
+    {
+        var config = new TypeAdapterConfig();
+
+        new RegisterMapper().Register(config);
+       
+        return config;
     }
 }

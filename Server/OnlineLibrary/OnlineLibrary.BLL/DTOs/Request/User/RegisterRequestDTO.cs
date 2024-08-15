@@ -1,6 +1,6 @@
 namespace OnlineLibrary.BLL.DTOs.Request.User;
 
-public class UserRequestDTO
+public class RegisterRequestDTO
 {
     public string Login { get; set; }
     public string Password { get; set; }

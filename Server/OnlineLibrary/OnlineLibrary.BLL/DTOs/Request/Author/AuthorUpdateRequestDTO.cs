@@ -4,6 +4,6 @@ namespace OnlineLibrary.BLL.DTOs.Request.Author;
 
 public class AuthorUpdateRequestDTO
 {
-    public AuthorDTO AuthorDTO { get; set; }
     public Guid Id { get; set; }
+    public AuthorDTO AuthorDTO { get; set; }
 }

@@ -23,16 +23,16 @@ public class UserController : Controller
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> LoginAsync([FromBody] UserRequestDTO userRequestDTO, CancellationToken cancellationToken = default)
+    public async Task<IActionResult> LoginAsync([FromBody] LoginRequestDTO loginRequestDto, CancellationToken cancellationToken = default)
     {
-        var tokenResponseDTO = await _loginUseCase.ExecuteAsync(userRequestDTO, cancellationToken);
+        var tokenResponseDTO = await _loginUseCase.ExecuteAsync(loginRequestDto, cancellationToken);
         return Ok(tokenResponseDTO);
     }
     
     [HttpPost("register")]
-    public async Task<IActionResult> RegisterAsync([FromBody] UserRequestDTO userRequestDTO, CancellationToken cancellationToken = default)
+    public async Task<IActionResult> RegisterAsync([FromBody] RegisterRequestDTO registerRequestDto, CancellationToken cancellationToken = default)
     {
-        var tokenResponseDTO = await _registerUseCase.ExecuteAsync(userRequestDTO, cancellationToken);
+        var tokenResponseDTO = await _registerUseCase.ExecuteAsync(registerRequestDto, cancellationToken);
         return Ok(tokenResponseDTO);
     }
     

@@ -28,8 +28,11 @@ public class GetAllBooksUseCase : IGetAllBooksUseCase
         bookQuery = ApplyFilters(bookQuery, bookParametersRequestDTO);
         
         var pagedBookList = await ApplyPaginationAsync(bookQuery, bookParametersRequestDTO, cancellationToken);
+
+        var pagedBookDTOList = new PagedList<BookResponseDTO>(_mapper.Map<PagedList<BookResponseDTO>>(pagedBookList), pagedBookList.TotalCount,
+            pagedBookList.CurrentPage, pagedBookList.PageSize);
         
-        return _mapper.Map<PagedList<BookResponseDTO>>(pagedBookList);
+        return pagedBookDTOList;
     }
 
     private IQueryable<BookEntity> ApplyFilters(IQueryable<BookEntity> query, BookParametersRequestDTO parameters)

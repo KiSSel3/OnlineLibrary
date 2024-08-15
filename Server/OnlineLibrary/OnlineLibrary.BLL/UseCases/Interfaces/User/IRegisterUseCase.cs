@@ -6,5 +6,5 @@ namespace OnlineLibrary.BLL.UseCases.Interfaces.User;
 
 public interface IRegisterUseCase
 {
-    Task<TokenResponseDTO> ExecuteAsync(UserRequestDTO userRequestDto, CancellationToken cancellationToken = default);
+    Task<TokenResponseDTO> ExecuteAsync(RegisterRequestDTO registerRequestDto, CancellationToken cancellationToken = default);
 }

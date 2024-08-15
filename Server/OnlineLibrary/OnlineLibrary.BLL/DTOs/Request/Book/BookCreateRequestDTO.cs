@@ -7,7 +7,7 @@ public class BookCreateRequestDTO
 {
     public BookDTO BookDTO { get; set; }
     
-    public IFormFile Image { get; set; }
+    public IFormFile? Image { get; set; }
     
     public Guid GenreId { get; set; }
     public Guid AuthorId { get; set; }

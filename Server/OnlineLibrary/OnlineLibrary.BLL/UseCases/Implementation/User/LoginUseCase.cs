@@ -26,10 +26,10 @@ public class LoginUseCase : ILoginUseCase
         _configuration = configuration;
     }
 
- public async Task<TokenResponseDTO> ExecuteAsync(UserRequestDTO userRequestDto, CancellationToken cancellationToken = default)
+ public async Task<TokenResponseDTO> ExecuteAsync(LoginRequestDTO loginRequestDto, CancellationToken cancellationToken = default)
     {
-        var user = await GetUserAsync(userRequestDto.Login, cancellationToken);
-        VerifyPassword(user.PasswordHash, userRequestDto.Password);
+        var user = await GetUserAsync(loginRequestDto.Login, cancellationToken);
+        VerifyPassword(user.PasswordHash, loginRequestDto.Password);
         
         var refreshToken = GenerateRefreshToken(user);
         var accessToken = await GenerateAccessTokenAsync(user, cancellationToken);

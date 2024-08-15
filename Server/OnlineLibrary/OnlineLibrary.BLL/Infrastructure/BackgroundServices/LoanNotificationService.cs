@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using OnlineLibrary.BLL.Infrastructure.Services.Interfaces;
 using OnlineLibrary.DAL.Infrastructure.Interfaces;
 using OnlineLibrary.DAL.Repositories.Interfaces;
@@ -13,25 +14,33 @@ public class LoanNotificationService : BackgroundService
 {
     private readonly IConfiguration _configuration;
     private readonly IServiceProvider _serviceProvider;
+    private readonly ILogger<LoanNotificationService> _logger;
     
-    public LoanNotificationService(IConfiguration configuration, IServiceProvider serviceProvider)
+    public LoanNotificationService(IConfiguration configuration, IServiceProvider serviceProvider, ILogger<LoanNotificationService> logger)
     {
         _configuration = configuration;
         _serviceProvider = serviceProvider;
+        _logger = logger;
     }
     
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         while (!stoppingToken.IsCancellationRequested)
         {
-            var intervalHours = _configuration.GetValue<int>("NotificationSettings:IntervalHours");
-            
-            using (var scope = _serviceProvider.CreateScope())
+            try
             {
-                var unitOfWork = scope.ServiceProvider.GetRequiredService<IUnitOfWork>();
-                await CheckAndSendNotificationsAsync(unitOfWork, stoppingToken);
+                using (var scope = _serviceProvider.CreateScope())
+                {
+                    var unitOfWork = scope.ServiceProvider.GetRequiredService<IUnitOfWork>();
+                    await CheckAndSendNotificationsAsync(unitOfWork, stoppingToken);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"LoanNotificationService error: {ex.Message}");
             }
             
+            var intervalHours = _configuration.GetValue<int>("NotificationSettings:IntervalHours");
             await Task.Delay(TimeSpan.FromHours(intervalHours), stoppingToken);
         }
     }
@@ -53,11 +62,26 @@ public class LoanNotificationService : BackgroundService
                 continue;
             }
             
-            var notificationServices = _serviceProvider.GetServices<INotificationService>();
-            
-            foreach (var notificationService in notificationServices)
+            using (var scope = _serviceProvider.CreateScope())
             {
-                await notificationService.SendNotificationAsync(new NotificationEventArgs(){ Book = book, User = user, Loan = loan }, cancellationToken);
+                var notificationServices = scope.ServiceProvider.GetServices<INotificationService>();
+
+                foreach (var notificationService in notificationServices)
+                {
+                    try
+                    {
+                        await notificationService.SendNotificationAsync(new NotificationEventArgs
+                        {
+                            Book = book,
+                            User = user,
+                            Loan = loan
+                        }, cancellationToken);
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogError(ex, "Error sending notification.");
+                    }
+                }
             }
         }
     }

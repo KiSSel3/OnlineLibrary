@@ -2,6 +2,8 @@ using OnlineLibrary.Presentation.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Logging.AddConfiguration(builder.Configuration.GetSection("Logging"));
+
 builder.AddAuthentication();
 builder.AddDataBase();
 builder.AddMapping();

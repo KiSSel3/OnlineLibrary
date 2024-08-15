@@ -28,11 +28,11 @@ public class RegisterUseCase : IRegisterUseCase
         _mapper = mapper;
     }
 
-    public async Task<TokenResponseDTO> ExecuteAsync(UserRequestDTO userRequestDto, CancellationToken cancellationToken = default)
+    public async Task<TokenResponseDTO> ExecuteAsync(RegisterRequestDTO registerRequestDTO, CancellationToken cancellationToken = default)
     {
-        await ValidateUserDoesNotExistAsync(userRequestDto.Login, cancellationToken);
+        await ValidateUserDoesNotExistAsync(registerRequestDTO.Login, cancellationToken);
 
-        var newUser = await CreateNewUserAsync(userRequestDto, cancellationToken);
+        var newUser = await CreateNewUserAsync(registerRequestDTO, cancellationToken);
         await AssignRoleToUserAsync("User", newUser.Id, cancellationToken);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
@@ -50,10 +50,10 @@ public class RegisterUseCase : IRegisterUseCase
         }
     }
     
-    private async Task<UserEntity> CreateNewUserAsync(UserRequestDTO userDto, CancellationToken cancellationToken)
+    private async Task<UserEntity> CreateNewUserAsync(RegisterRequestDTO registerRequestDTO, CancellationToken cancellationToken)
     {
-        var newUser = _mapper.Map<UserEntity>(userDto);
-        newUser.PasswordHash = _passwordService.HashPassword(userDto.Password);
+        var newUser = _mapper.Map<UserEntity>(registerRequestDTO);
+        newUser.PasswordHash = _passwordService.HashPassword(registerRequestDTO.Password);
         newUser.RefreshToken = _tokenService.GenerateRefreshToken();
         newUser.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(_configuration.GetSection("Jwt:RefreshTokenExpirationDays").Get<int>());
         
