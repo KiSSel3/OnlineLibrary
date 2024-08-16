@@ -62,7 +62,7 @@ public class LoanRepository : ILoanRepository
             .AllAsync(l => l.BookId != bookId || l.IsDeleted, cancellationToken);
     }
 
-    public async Task<IEnumerable<LoanEntity>> GetLoansDueForReturnAsync(DateTime dueDate, CancellationToken cancellationToken)
+    public async Task<IEnumerable<LoanEntity>> GetLoansDueForReturnAsync(DateTime dueDate, CancellationToken cancellationToken = default)
     {
         return await _dbContext.Loans
             .Where(l => l.ReturnBy <= dueDate && !l.IsDeleted)

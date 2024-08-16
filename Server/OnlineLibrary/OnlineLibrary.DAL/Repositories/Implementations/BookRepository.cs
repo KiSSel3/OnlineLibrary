@@ -43,7 +43,7 @@ public class BookRepository : IBookRepository
         _dbContext.Books.Update(entity);
     }
 
-    public async Task<BookEntity> GetByISBNAsync(string isbn, CancellationToken cancellationToken)
+    public async Task<BookEntity> GetByISBNAsync(string isbn, CancellationToken cancellationToken = default)
     {
         return await _dbContext.Books
             .FirstOrDefaultAsync(b => b.ISBN == isbn && !b.IsDeleted, cancellationToken);
