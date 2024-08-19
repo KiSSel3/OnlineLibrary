@@ -1,0 +1,25 @@
+<div class="container">
+  <section id="content">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <h1>Login</h1>
+
+      <div>
+        <input
+          formControlName="login"
+          type="text" placeholder="Login" required="" id="username"
+        />
+      </div>
+
+      <div>
+        <input
+          formControlName="password"
+          type="password" placeholder="Password" required="" id="password"
+        />
+      </div>
+
+      <div>
+        <input type="submit" value="Log in" />
+      </div>
+    </form>
+  </section>
+</div>
