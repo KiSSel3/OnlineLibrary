@@ -1,0 +1,17 @@
+<app-sidebar></app-sidebar>
+
+<div class="main-content">
+  <div class="books-container">
+    <app-book-card *ngFor="let book of pagedList().items" [book]="book"></app-book-card>
+  </div>
+
+  <div class="pagination-container">
+    <mat-paginator [length]="pagedList().pagination.TotalCount"
+                   [pageSize]="pagedList().pagination.PageSize"
+                   [pageIndex]="pagedList().pagination.CurrentPage - 1"
+                   [hidePageSize]="true"
+                   (page)="handlePageEvent($event)"
+                   aria-label="Select page">
+    </mat-paginator>
+  </div>
+</div>

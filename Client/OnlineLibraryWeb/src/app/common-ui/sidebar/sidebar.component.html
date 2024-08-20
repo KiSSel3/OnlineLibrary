@@ -1,0 +1,26 @@
+<form [formGroup]="form">
+  <mat-form-field>
+    <mat-label>Author</mat-label>
+    <mat-select formControlName="authorId">
+      <mat-option [value]="null"> All </mat-option>
+      <mat-option *ngFor="let author of authors" [value]="author.id">
+        {{ author.authorDTO.firstName }} {{ author.authorDTO.lastName }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Genre</mat-label>
+    <mat-select formControlName="genreId">
+      <mat-option [value]="null"> All </mat-option>
+      <mat-option *ngFor="let genre of genres" [value]="genre.id">
+        {{ genre.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Book Title</mat-label>
+    <input matInput formControlName="searchName" placeholder="Title">
+  </mat-form-field>
+</form>

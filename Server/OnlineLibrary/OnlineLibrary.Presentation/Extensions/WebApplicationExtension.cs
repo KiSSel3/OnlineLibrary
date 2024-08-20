@@ -23,6 +23,7 @@ public static class WebApplicationExtension
             builder.WithOrigins("http://localhost:4200") 
                 .AllowAnyMethod()
                 .AllowAnyHeader()
+                .WithExposedHeaders("X-Pagination")
                 .AllowCredentials();
         }); 
         app.UseRouting();

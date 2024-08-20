@@ -1,0 +1,29 @@
+@if(book){
+  <div class="product-wrap">
+    <div class="product-image">
+      <a href="">
+        @if(book.image){
+          <img
+            [src]="book.image"
+            [alt]="book.bookDTO.title"
+          >
+        }
+        @else {
+          <img src="https://amiel.club/uploads/posts/2022-03/1647665180_1-amiel-club-p-kartinki-dlya-oblozhki-knigi-1.jpg">
+        }
+        <div class="shadow"></div>
+      </a>
+      <a class="detail-link" href="" title="Быстрый просмотр"></a>
+    </div>
+    <div class="product-list">
+      <h3>{{ book.bookDTO.title }}</h3>
+      @if(isAvailable){
+        <div class="information">Available</div>
+      }
+      @else {
+        <div class="information">Not available</div>
+      }
+
+    </div>
+  </div>
+}

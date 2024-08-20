@@ -34,8 +34,7 @@ public class RegisterMapper : IRegister
             .Map(dest => dest.DateOfBirth, src => src.AuthorDTO.DateOfBirth)
             .Map(dest => dest.Country, src => src.AuthorDTO.Country);
 
-        config.NewConfig<AuthorDTO, AuthorEntity>()
-            .RequireDestinationMemberSource(true);
+        config.NewConfig<AuthorDTO, AuthorEntity>();
         config.NewConfig<AuthorEntity, AuthorDTO>();
         
         //Book
