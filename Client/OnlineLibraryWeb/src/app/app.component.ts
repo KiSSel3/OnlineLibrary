@@ -6,6 +6,8 @@ import {RegisterPageComponent} from "./pages/register-page/register-page.compone
 import {BookCardComponent} from "./common-ui/book-card/book-card.component";
 import {JsonPipe, NgForOf} from "@angular/common";
 import {SearchPageComponent} from "./pages/search-page/search-page.component";
+import {BookDetailsPageComponent} from "./pages/book-details-page/book-details-page.component";
+import {SidebarComponent} from "./common-ui/sidebar/sidebar.component";
 
 
 
@@ -19,6 +21,8 @@ import {SearchPageComponent} from "./pages/search-page/search-page.component";
     RegisterPageComponent,
     BookCardComponent,
     SearchPageComponent,
+    BookDetailsPageComponent,
+    SidebarComponent,
     JsonPipe,
     NgForOf
   ],

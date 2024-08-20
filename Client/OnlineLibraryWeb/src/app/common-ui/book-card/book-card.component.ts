@@ -1,6 +1,7 @@
 import {Component, inject, Input, OnInit} from '@angular/core';
 import {BookResponseDTO} from "../../interfaces/book-response.dto";
 import {BookService} from "../../services/book.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-book-card',
@@ -11,6 +12,8 @@ import {BookService} from "../../services/book.service";
 })
 export class BookCardComponent implements OnInit {
   private bookService = inject(BookService);
+  private router = inject(Router)
+
 
   isAvailable: boolean = false;
   @Input() book!: BookResponseDTO;
@@ -28,5 +31,9 @@ export class BookCardComponent implements OnInit {
         this.isAvailable = false;
       }
     );
+  }
+
+  goToDetails(bookId: string): void {
+    this.router.navigate(['/book', bookId]);
   }
 }

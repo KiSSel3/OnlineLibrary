@@ -1,0 +1,28 @@
+<mat-card class="book-card" appearance="outlined">
+  <mat-card-header>
+    <div mat-card-avatar class="author-header-image"></div>
+    <mat-card-title>{{ bookDetails.bookDTO.title }}</mat-card-title>
+    <mat-card-subtitle>{{ bookDetails.authorDTO.firstName }} {{ bookDetails.authorDTO.lastName }}</mat-card-subtitle>
+  </mat-card-header>
+  @if (bookDetails.image){
+    <img
+      [src]="bookDetails.image"
+      [alt]="bookDetails.bookDTO.title"
+    >
+  } @else {
+    <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Book">
+  }
+
+  <mat-card-content>
+    <p>{{ bookDetails.bookDTO.description }}</p>
+  </mat-card-content>
+  <mat-card-actions>
+    @if(isAvailable){
+      <button mat-button>Available</button>
+    }
+    @else {
+      <button mat-button>Not available</button>
+    }
+    <button mat-button [disabled]="!isAvailable">Borrowed</button>
+  </mat-card-actions>
+</mat-card>

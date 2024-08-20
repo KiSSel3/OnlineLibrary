@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, inject, OnDestroy, OnInit} from '@angular/core';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatSelectModule } from "@angular/material/select";
 import {MatInput} from "@angular/material/input";
@@ -10,8 +10,9 @@ import {NgForOf} from "@angular/common";
 import {GenreService} from "../../services/genre.service";
 import {GenreDTO} from "../../interfaces/genre.dto";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {debounceTime, map, startWith, switchMap} from "rxjs";
+import {debounceTime, map, startWith, Subscription, switchMap} from "rxjs";
 import {FormStateService} from "../../services/form-state.service";
+import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 
 @Component({
   selector: 'app-sidebar',
@@ -26,7 +27,7 @@ import {FormStateService} from "../../services/form-state.service";
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css'
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent {
   bookService = inject(BookService);
   authorService = inject(AuthorService);
   genreService = inject(GenreService);
@@ -41,7 +42,9 @@ export class SidebarComponent implements OnInit {
     authorId: new FormControl(null),
   })
 
-  ngOnInit(): void {
+  formSub! : Subscription;
+
+  constructor() {
     this.authorService.getAllAuthors().subscribe(data => {
       this.authors = data;
     });
@@ -66,7 +69,8 @@ export class SidebarComponent implements OnInit {
           this.formStateService.updateFormState(this.form);
 
           return this.bookService.getBooks(formValue);
-        })
+        }),
+        takeUntilDestroyed()
       )
       .subscribe()
   }

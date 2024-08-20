@@ -1,7 +1,7 @@
 @if(book){
   <div class="product-wrap">
     <div class="product-image">
-      <a href="">
+      <a (click)="goToDetails(book.id)">
         @if(book.image){
           <img
             [src]="book.image"
@@ -13,7 +13,7 @@
         }
         <div class="shadow"></div>
       </a>
-      <a class="detail-link" href="" title="Быстрый просмотр"></a>
+      <a class="detail-link" (click)="goToDetails(book.id)" title="Быстрый просмотр"></a>
     </div>
     <div class="product-list">
       <h3>{{ book.bookDTO.title }}</h3>

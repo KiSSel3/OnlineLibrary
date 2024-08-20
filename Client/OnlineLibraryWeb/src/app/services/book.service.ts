@@ -4,6 +4,7 @@ import {map, Observable, tap} from "rxjs";
 import {BookResponseDTO} from "../interfaces/book-response.dto";
 import {Pagination} from "../helpers/pagination";
 import {PagedList} from "../helpers/paged-list";
+import {BookDetailsResponseDTO} from "../interfaces/book-details-response.dto";
 
 @Injectable({
   providedIn: 'root'
@@ -57,6 +58,10 @@ export class BookService {
           } as PagedList<BookResponseDTO>;
         })
       );
+  }
+
+  getBookById(id: string): Observable<BookDetailsResponseDTO> {
+    return this.http.get<BookDetailsResponseDTO>(`${this.baseBookUrl}/get-by-id/${id}`);
   }
 
   checkBookAvailability(bookId: string): Observable<boolean> {
