@@ -1,6 +1,7 @@
 using MapsterMapper;
 using Microsoft.Extensions.Caching.Memory;
 using OnlineLibrary.BLL.DTOs.Common;
+using OnlineLibrary.BLL.DTOs.Responses.Author;
 using OnlineLibrary.BLL.DTOs.Responses.Book;
 using OnlineLibrary.BLL.Exceptions;
 using OnlineLibrary.BLL.UseCases.Interfaces.Book;
@@ -34,11 +35,15 @@ public class GetBookByIdUseCase : IGetBookByIdUseCase
             
             cachedBookDetails = new BookDetailsResponseDTO
             {
-                AuthorDTO = _mapper.Map<AuthorDTO>(author),
-                BookDTO = _mapper.Map<BookDTO>(book),
+                AuthorResponseDTO = _mapper.Map<AuthorResponseDTO>(author),
+                BookResponseDTO = _mapper.Map<BookResponseDTO>(book),
                 GenreDTO = _mapper.Map<GenreDTO>(genre),
-                Image = book.Image
             };
+
+            if (book.Image != null)
+            {
+                cachedBookDetails.Image = Convert.ToBase64String(book.Image);
+            }
             
             var cacheEntryOptions = new MemoryCacheEntryOptions()
                 .SetSlidingExpiration(TimeSpan.FromMinutes(30));

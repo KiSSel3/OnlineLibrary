@@ -1,0 +1,27 @@
+<mat-card class="book-card" appearance="outlined">
+  <mat-card-header>
+    <div mat-card-avatar class="author-header-image"></div>
+    <mat-card-title>"{{ bookDetails.bookResponseDTO.bookDTO.title }}" {{ bookDetails.genreDTO.name }}</mat-card-title>
+    <mat-card-subtitle>{{ bookDetails.authorResponseDTO.authorDTO.firstName }} {{ bookDetails.authorResponseDTO.authorDTO.lastName }}</mat-card-subtitle>
+  </mat-card-header>
+  @if (bookDetails.image){
+    <img
+      [src]="bookDetails.image | byteArrayToBase64"
+      [alt]="bookDetails.bookResponseDTO.bookDTO.title"
+    >
+  } @else {
+    <img mat-card-image src="https://amiel.club/uploads/posts/2022-03/1647665180_1-amiel-club-p-kartinki-dlya-oblozhki-knigi-1.jpg" alt="Book">
+  }
+
+  <mat-card-content>
+    <p>{{ bookDetails.bookResponseDTO.bookDTO.description }}</p>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button>{{ isAvailable ? "Available" : "Not available" }}</button>
+    <button mat-button [disabled]="!isAvailable" (click)="openDialog()" >Borrowed</button>
+    <button mat-button *ngIf="isAdmin" (click)="openUpdateDialog(bookDetails)">Edit</button>
+    <button mat-button *ngIf="isAdmin" color="warn" (click)="openDeleteConfirmDialog(bookDetails.bookResponseDTO.id)">Delete Book</button>
+
+
+  </mat-card-actions>
+</mat-card>

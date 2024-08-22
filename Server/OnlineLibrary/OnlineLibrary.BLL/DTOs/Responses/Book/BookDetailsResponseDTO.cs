@@ -1,12 +1,13 @@
 using OnlineLibrary.BLL.DTOs.Common;
+using OnlineLibrary.BLL.DTOs.Responses.Author;
 
 namespace OnlineLibrary.BLL.DTOs.Responses.Book;
 
 public class BookDetailsResponseDTO
 {
-    public BookDTO BookDTO { get; set; }
+    public BookResponseDTO BookResponseDTO { get; set; }
     public GenreDTO GenreDTO { get; set; }
-    public AuthorDTO AuthorDTO { get; set; }
+    public AuthorResponseDTO AuthorResponseDTO { get; set; }
     
-    public byte[] Image { get; set; }
+    public string Image { get; set; }
 }

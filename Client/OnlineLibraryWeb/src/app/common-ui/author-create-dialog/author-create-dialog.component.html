@@ -1,0 +1,44 @@
+<form [formGroup]="authorForm" (ngSubmit)="onClick()">
+  <mat-dialog-content>
+    <p>Create Author</p>
+
+    <mat-form-field>
+      <mat-label>First Name</mat-label>
+      <input matInput formControlName="firstName" placeholder="Enter first name" />
+      <mat-error *ngIf="authorForm.get('firstName')?.hasError('required')">
+        First Name is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Last Name</mat-label>
+      <input matInput formControlName="lastName" placeholder="Enter last name" />
+      <mat-error *ngIf="authorForm.get('lastName')?.hasError('required')">
+        Last Name is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Date of Birth</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="dateOfBirth" placeholder="yyyy-mm-dd" />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-error *ngIf="authorForm.get('dateOfBirth')?.hasError('required')">
+        Date of Birth is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Country</mat-label>
+      <input matInput formControlName="country" placeholder="Enter country" />
+      <mat-error *ngIf="authorForm.get('country')?.hasError('required')">
+        Country is required
+      </mat-error>
+    </mat-form-field>
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Cancel</button>
+    <button mat-button type="submit" [disabled]="authorForm.invalid">Create</button>
+  </mat-dialog-actions>
+</form>

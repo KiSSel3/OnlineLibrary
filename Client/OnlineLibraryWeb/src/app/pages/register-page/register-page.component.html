@@ -1,0 +1,36 @@
+<div class="container">
+  <section id="content">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <h1>Register</h1>
+
+      <div>
+        <input
+          formControlName="login"
+          type="text" placeholder="Login" id="username"
+        />
+      </div>
+
+      <div>
+        <input
+          formControlName="email"
+          type="email" placeholder="Email" id="email"
+        />
+      </div>
+
+      <div>
+        <input
+          formControlName="password"
+          type="password" placeholder="Password" id="password"
+        />
+      </div>
+
+      <div>
+        <input type="submit" value="Register" />
+      </div>
+
+      <div>
+        <button type="button" (click)="goToLogin()">You have an account?</button>
+      </div>
+    </form>
+  </section>
+</div>

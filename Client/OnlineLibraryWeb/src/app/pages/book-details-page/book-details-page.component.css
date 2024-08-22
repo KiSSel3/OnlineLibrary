@@ -1,0 +1,15 @@
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.book-card {
+  max-width: 450px;
+}
+
+.author-header-image {
+  background-image: url('https://cdn-icons-png.flaticon.com/512/4962/4962014.png');
+  background-size: cover;
+}

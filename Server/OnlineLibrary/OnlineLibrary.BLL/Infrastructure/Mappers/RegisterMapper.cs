@@ -34,8 +34,7 @@ public class RegisterMapper : IRegister
             .Map(dest => dest.DateOfBirth, src => src.AuthorDTO.DateOfBirth)
             .Map(dest => dest.Country, src => src.AuthorDTO.Country);
 
-        config.NewConfig<AuthorDTO, AuthorEntity>()
-            .RequireDestinationMemberSource(true);
+        config.NewConfig<AuthorDTO, AuthorEntity>();
         config.NewConfig<AuthorEntity, AuthorDTO>();
         
         //Book
@@ -64,7 +63,9 @@ public class RegisterMapper : IRegister
                 Title = src.Title,
                 Description = src.Description
             })
-            .Map(dest => dest.Image, src => src.Image);
+            .Map(dest => dest.Image, src => src.Image != null && src.Image.Length > 0 
+                ? Convert.ToBase64String(src.Image) 
+                : string.Empty);
         
         config.NewConfig<BookDTO, BookEntity>();
         config.NewConfig<BookEntity, BookDTO>();

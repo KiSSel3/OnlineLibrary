@@ -1,0 +1,19 @@
+:host {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  grid-template-rows: 1fr auto;
+  height: 100vh;
+}
+
+.books-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 5px;
+  row-gap: 30px;
+}
+
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}

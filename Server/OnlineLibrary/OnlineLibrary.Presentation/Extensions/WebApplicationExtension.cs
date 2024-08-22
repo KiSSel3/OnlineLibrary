@@ -20,9 +20,10 @@ public static class WebApplicationExtension
         app.UseStaticFiles();
         app.UseCors(builder =>
         {
-            builder.WithOrigins("http://localhost:44315") 
+            builder.WithOrigins("http://localhost:4200") 
                 .AllowAnyMethod()
                 .AllowAnyHeader()
+                .WithExposedHeaders("X-Pagination")
                 .AllowCredentials();
         }); 
         app.UseRouting();
