@@ -10,6 +10,10 @@ export class GenreService {
   private baseUrl = 'https://localhost:7295/api/genre';
   private http = inject(HttpClient);
 
+  createGenre(name: string): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/create/${name}`, {});
+  }
+
   getAllGenres(): Observable<GenreDTO[]> {
     return this.http.get<GenreDTO[]>(`${this.baseUrl}/get-all`);
   }

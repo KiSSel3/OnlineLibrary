@@ -51,4 +51,8 @@ export class RegisterPageComponent {
       data: {message: errorMessage}
     });
   }
+
+  goToLogin() {
+    this.router.navigate(['/login']);
+  }
 }

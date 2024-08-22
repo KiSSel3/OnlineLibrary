@@ -1,0 +1,12 @@
+<mat-card class="loan-card" appearance="outlined">
+  <mat-card-header>
+    <mat-card-title>"{{ loan.bookDTO.title }}"</mat-card-title>
+    <mat-card-subtitle>{{ loan.bookDTO.isbn }}</mat-card-subtitle>
+  </mat-card-header>
+  <img mat-card-image src="https://amiel.club/uploads/posts/2022-03/1647665180_1-amiel-club-p-kartinki-dlya-oblozhki-knigi-1.jpg" alt="Book">
+  <mat-card-content>
+    <div class="information">
+      {{ loan.borrowedAt | date }} - {{ loan.returnBy | date }}
+    </div>
+  </mat-card-content>
+</mat-card>

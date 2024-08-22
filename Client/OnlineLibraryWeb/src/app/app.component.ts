@@ -8,6 +8,7 @@ import {JsonPipe, NgForOf} from "@angular/common";
 import {SearchPageComponent} from "./pages/search-page/search-page.component";
 import {BookDetailsPageComponent} from "./pages/book-details-page/book-details-page.component";
 import {SidebarComponent} from "./common-ui/sidebar/sidebar.component";
+import {ProfilePageComponent} from "./pages/profile-page/profile-page.component";
 
 
 
@@ -23,6 +24,8 @@ import {SidebarComponent} from "./common-ui/sidebar/sidebar.component";
     SearchPageComponent,
     BookDetailsPageComponent,
     SidebarComponent,
+    ProfilePageComponent,
+    LoginPageComponent,
     JsonPipe,
     NgForOf
   ],

@@ -1,10 +1,10 @@
-import {BookDTO} from "./book.dto";
 import {GenreDTO} from "./genre.dto";
-import {AuthorDTO} from "./author.dto";
+import {BookResponseDTO} from "./book-response.dto";
+import {AuthorResponseDTO} from "./author.response.dto";
 
 export interface BookDetailsResponseDTO {
-  bookDTO: BookDTO;
+  bookResponseDTO: BookResponseDTO;
   genreDTO: GenreDTO;
-  authorDTO: AuthorDTO;
-  image: Uint8Array | null;
+  authorResponseDTO: AuthorResponseDTO;
+  image: string;
 }

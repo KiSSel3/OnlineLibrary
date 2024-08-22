@@ -24,21 +24,24 @@ public class GetLoansByUserIdUseCase : IGetLoansByUserIdUseCase
         var loans = await _unitOfWork.GetCustomRepository<ILoanRepository>()
             .GetByUserIdAsync(userId, cancellationToken);
 
-        var loanResponseList = await Task.WhenAll(loans.Select(async loan =>
+        var loanResponseList = new List<LoanResponseDTO>();
+
+        foreach (var loan in loans)
         {
             var user = await _unitOfWork.GetCustomRepository<IUserRepository>()
                 .GetByIdAsync(loan.UserId, cancellationToken);
+
             var book = await _unitOfWork.GetCustomRepository<IBookRepository>()
                 .GetByIdAsync(loan.BookId, cancellationToken);
 
-            return new LoanResponseDTO
+            loanResponseList.Add(new LoanResponseDTO
             {
                 UserDTO = _mapper.Map<UserResponseDTO>(user),
                 BookDTO = _mapper.Map<BookDTO>(book),
                 BorrowedAt = loan.BorrowedAt,
                 ReturnBy = loan.ReturnBy
-            };
-        }));
+            });
+        }
 
         return loanResponseList;
     }

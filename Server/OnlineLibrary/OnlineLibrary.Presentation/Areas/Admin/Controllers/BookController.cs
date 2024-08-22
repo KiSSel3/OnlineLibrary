@@ -24,14 +24,15 @@ public class BookController : Controller
     }
     
     [HttpPost("create")]
-    public async Task<IActionResult> CreateAsync([FromBody] BookCreateRequestDTO bookCreateRequestDTO, CancellationToken cancellationToken = default)
+    public async Task<IActionResult> CreateAsync([FromForm] BookCreateRequestDTO bookCreateRequestDTO, CancellationToken cancellationToken = default)
     {
         await _createNewBookUseCase.ExecuteAsync(bookCreateRequestDTO, cancellationToken);
         return Ok();
     }
+
     
     [HttpPut("update")]
-    public async Task<IActionResult> UpdateAsync([FromBody] BookUpdateRequestDTO bookUpdateRequestDTO, CancellationToken cancellationToken = default)
+    public async Task<IActionResult> UpdateAsync([FromForm] BookUpdateRequestDTO bookUpdateRequestDTO, CancellationToken cancellationToken = default)
     {
         await _updateBookUseCase.ExecuteAsync(bookUpdateRequestDTO,cancellationToken);
         return Ok();

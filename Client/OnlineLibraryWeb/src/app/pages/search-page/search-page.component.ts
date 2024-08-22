@@ -2,10 +2,8 @@ import {Component, inject, OnInit} from '@angular/core';
 import {BookCardComponent} from "../../common-ui/book-card/book-card.component";
 import {JsonPipe, NgForOf} from "@angular/common";
 import {BookService} from "../../services/book.service";
-import {BookResponseDTO} from "../../interfaces/book-response.dto";
 import {SidebarComponent} from "../../common-ui/sidebar/sidebar.component";
 import {MatPaginator, PageEvent} from "@angular/material/paginator";
-import {FormBuilder, FormControl} from "@angular/forms";
 import {FormStateService} from "../../services/form-state.service";
 import {switchMap, tap} from "rxjs";
 
@@ -30,7 +28,7 @@ export class SearchPageComponent {
   form$ = this.formService.formState$;
 
   handlePageEvent(e: PageEvent) {
-    const pageSize = e.pageSize; // Извлекаем размер страницы из PageEvent
+    const pageSize = e.pageSize;
     const currentPage = e.pageIndex + 1;
 
     this.form$.pipe(

@@ -1,0 +1,9 @@
+.information {
+  font-weight: bold;
+  font-size: 18px;
+  color: #ff7659;
+}
+
+.loan-card {
+  max-width: 400px;
+}

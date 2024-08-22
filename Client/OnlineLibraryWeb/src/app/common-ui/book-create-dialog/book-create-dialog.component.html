@@ -1,0 +1,61 @@
+<mat-dialog-content>
+  <form [formGroup]="bookForm" (ngSubmit)="onClick()">
+    <mat-form-field appearance="fill" style="display: block; margin-bottom: 16px;">
+      <mat-label>ISBN</mat-label>
+      <input matInput formControlName="isbn" placeholder="ISBN" />
+      <mat-error *ngIf="bookForm.get('isbn')?.hasError('required')">
+        ISBN is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" style="display: block; margin-bottom: 16px;">
+      <mat-label>Title</mat-label>
+      <input matInput formControlName="title" placeholder="Title" />
+      <mat-error *ngIf="bookForm.get('title')?.hasError('required')">
+        Title is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" style="display: block; margin-bottom: 16px;">
+      <mat-label>Description</mat-label>
+      <textarea matInput formControlName="description" placeholder="Description"></textarea>
+      <mat-error *ngIf="bookForm.get('description')?.hasError('required')">
+        Description is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" style="display: block; margin-bottom: 16px;">
+      <mat-label>Genre</mat-label>
+      <mat-select formControlName="genreId">
+        <mat-option *ngFor="let genre of genres" [value]="genre.id">
+          {{ genre.name }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="bookForm.get('genreId')?.hasError('required')">
+        Genre is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" style="display: block; margin-bottom: 16px;">
+      <mat-label>Author</mat-label>
+      <mat-select formControlName="authorId">
+        <mat-option *ngFor="let author of authors" [value]="author.id">
+          {{ author.authorDTO.firstName }} {{ author.authorDTO.lastName }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="bookForm.get('authorId')?.hasError('required')">
+        Author is required
+      </mat-error>
+    </mat-form-field>
+
+    <input type="file" style="display: block; margin-bottom: 16px;" (change)="onFileChange($event)">
+    <mat-error *ngIf="imageError">
+      {{ imageError }}
+    </mat-error>
+
+    <mat-dialog-actions>
+      <button mat-button (click)="onNoClick()">Cancel</button>
+      <button mat-button type="submit" [disabled]="bookForm.invalid">Create</button>
+    </mat-dialog-actions>
+  </form>
+</mat-dialog-content>

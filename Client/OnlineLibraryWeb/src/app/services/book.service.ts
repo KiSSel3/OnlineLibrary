@@ -5,6 +5,7 @@ import {BookResponseDTO} from "../interfaces/book-response.dto";
 import {Pagination} from "../helpers/pagination";
 import {PagedList} from "../helpers/paged-list";
 import {BookDetailsResponseDTO} from "../interfaces/book-details-response.dto";
+import {BookCreateRequestDTO} from "../interfaces/book-request.dto";
 
 @Injectable({
   providedIn: 'root'
@@ -64,7 +65,15 @@ export class BookService {
     return this.http.get<BookDetailsResponseDTO>(`${this.baseBookUrl}/get-by-id/${id}`);
   }
 
-  checkBookAvailability(bookId: string): Observable<boolean> {
-    return this.http.get<boolean>(`${this.baseLoanUrl}/check-availability/${bookId}`);
+  createBook(bookData: FormData): Observable<void> {
+    return this.http.post<void>(`${this.baseBookUrl}/create`, bookData);
+  }
+
+  updateBook(formData: FormData): Observable<any> {
+    return this.http.put(`${this.baseBookUrl}/update`, formData);
+  }
+
+  deleteBook(bookId: string): Observable<void> {
+    return this.http.delete<void>(`${this.baseBookUrl}/delete/${bookId}`);
   }
 }

@@ -1,0 +1,11 @@
+<mat-dialog-content>
+  <p>Create genre</p>
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input matInput [(ngModel)]="genreName" placeholder="Enter genre name" required />
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button (click)="onClick()" cdkFocusInitial>Create</button>
+</mat-dialog-actions>

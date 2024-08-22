@@ -142,6 +142,8 @@ form:after {
 }
 #username { background-position: 10px 10px !important }
 #password { background-position: 10px -53px !important }
+
+button[type="button"],
 #content form input[type="submit"] {
   background: rgb(254,231,154);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fee79a', endColorstr='#fec151',GradientType=0 );
@@ -167,6 +169,7 @@ form:after {
   width: 120px;
 }
 
+button[type="button"]:hover,
 #content form input[type="submit"]:hover {
   background: rgb(254,193,81);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fec151', endColorstr='#fee79a',GradientType=0 );

@@ -55,4 +55,8 @@ export class LoginPageComponent {
       data: {message: errorMessage}
     });
   }
+
+  goToRegister() {
+    this.router.navigate(['/register']);
+  }
 }
