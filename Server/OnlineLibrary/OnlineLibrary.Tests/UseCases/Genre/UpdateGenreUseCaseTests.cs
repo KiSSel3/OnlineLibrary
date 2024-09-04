@@ -1,3 +1,6 @@
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 using MapsterMapper;
 using Moq;
 using OnlineLibrary.BLL.DTOs.Common;
@@ -6,59 +9,61 @@ using OnlineLibrary.BLL.UseCases.Implementation.Genre;
 using OnlineLibrary.DAL.Infrastructure.Interfaces;
 using OnlineLibrary.DAL.Repositories.Interfaces;
 using OnlineLibrary.Domain.Entities;
+using Xunit;
 
-namespace OnlineLibrary.Tests.UseCases.Genre;
-
-public class UpdateGenreUseCaseTests
+namespace OnlineLibrary.Tests.UseCases.Genre
 {
-    private readonly Mock<IUnitOfWork> _unitOfWorkMock;
-    private readonly Mock<IMapper> _mapperMock;
-    private readonly UpdateGenreUseCase _useCase;
-
-    public UpdateGenreUseCaseTests()
+    public class UpdateGenreUseCaseTests
     {
-        _unitOfWorkMock = new Mock<IUnitOfWork>();
-        _mapperMock = new Mock<IMapper>();
-        _useCase = new UpdateGenreUseCase(_unitOfWorkMock.Object, _mapperMock.Object);
-    }
+        private readonly Mock<IUnitOfWork> _unitOfWorkMock;
+        private readonly Mock<IMapper> _mapperMock;
+        private readonly UpdateGenreUseCase _useCase;
 
-    [Fact]
-    public async Task ExecuteAsync_ShouldUpdateAndSaveGenre_WhenGenreExists()
-    {
-        // Arrange
-        var genreDto = new GenreDTO { Id = Guid.NewGuid(), Name = "Updated Fantasy" };
-        var genreEntity = new GenreEntity { Id = genreDto.Id, Name = "Old Fantasy" };
+        public UpdateGenreUseCaseTests()
+        {
+            _unitOfWorkMock = new Mock<IUnitOfWork>();
+            _mapperMock = new Mock<IMapper>();
+            _useCase = new UpdateGenreUseCase(_unitOfWorkMock.Object, _mapperMock.Object);
+        }
 
-        var genreRepositoryMock = new Mock<IBaseRepository<GenreEntity>>();
-        _unitOfWorkMock.Setup(u => u.GetBaseRepository<GenreEntity>()).Returns(genreRepositoryMock.Object);
+        [Fact]
+        public async Task ExecuteAsync_ShouldUpdateAndSaveGenre_WhenGenreExists()
+        {
+            // Arrange
+            var genreId = Guid.NewGuid();
+            var genreName = "Updated Fantasy";
 
-        genreRepositoryMock.Setup(r => r.GetByIdAsync(genreDto.Id, It.IsAny<CancellationToken>()))
-            .ReturnsAsync(genreEntity);
+            var existingGenre = new GenreEntity { Id = genreId, Name = "Old Fantasy" };
 
-        _mapperMock.Setup(m => m.Map<GenreEntity>(genreDto))
-            .Returns(new GenreEntity { Id = genreDto.Id, Name = genreDto.Name });
+            var genreRepositoryMock = new Mock<IBaseRepository<GenreEntity>>();
+            _unitOfWorkMock.Setup(u => u.GetBaseRepository<GenreEntity>()).Returns(genreRepositoryMock.Object);
 
-        // Act
-        await _useCase.ExecuteAsync(genreDto);
+            genreRepositoryMock.Setup(r => r.GetByIdAsync(genreId, It.IsAny<CancellationToken>()))
+                .ReturnsAsync(existingGenre);
 
-        // Assert
-        genreRepositoryMock.Verify(r => r.Update(It.Is<GenreEntity>(g => g.Id == genreDto.Id && g.Name == genreDto.Name)), Times.Once);
-        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
-    }
+            // Act
+            await _useCase.ExecuteAsync(genreId, genreName);
 
-    [Fact]
-    public async Task ExecuteAsync_ShouldThrowEntityNotFoundException_WhenGenreNotFound()
-    {
-        // Arrange
-        var genreDto = new GenreDTO { Id = Guid.NewGuid() };
+            // Assert
+            genreRepositoryMock.Verify(r => r.Update(It.Is<GenreEntity>(g => g.Id == genreId && g.Name == genreName)), Times.Once);
+            _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
+        }
 
-        var genreRepositoryMock = new Mock<IBaseRepository<GenreEntity>>();
-        _unitOfWorkMock.Setup(u => u.GetBaseRepository<GenreEntity>()).Returns(genreRepositoryMock.Object);
-        
-        genreRepositoryMock.Setup(r => r.GetByIdAsync(genreDto.Id, It.IsAny<CancellationToken>()))
-            .ReturnsAsync((GenreEntity)null);
+        [Fact]
+        public async Task ExecuteAsync_ShouldThrowEntityNotFoundException_WhenGenreNotFound()
+        {
+            // Arrange
+            var genreId = Guid.NewGuid();
+            var genreName = "NonExisting Genre";
 
-        // Act & Assert
-        await Assert.ThrowsAsync<EntityNotFoundException>(() => _useCase.ExecuteAsync(genreDto));
+            var genreRepositoryMock = new Mock<IBaseRepository<GenreEntity>>();
+            _unitOfWorkMock.Setup(u => u.GetBaseRepository<GenreEntity>()).Returns(genreRepositoryMock.Object);
+
+            genreRepositoryMock.Setup(r => r.GetByIdAsync(genreId, It.IsAny<CancellationToken>()))
+                .ReturnsAsync((GenreEntity)null);
+
+            // Act & Assert
+            await Assert.ThrowsAsync<EntityNotFoundException>(() => _useCase.ExecuteAsync(genreId, genreName));
+        }
     }
 }

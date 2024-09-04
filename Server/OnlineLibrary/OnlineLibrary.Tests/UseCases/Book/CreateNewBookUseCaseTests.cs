@@ -34,7 +34,9 @@ public class CreateNewBookUseCaseTests
         // Arrange
         var bookCreateRequestDTO = new BookCreateRequestDTO
         {
-            BookDTO = new BookDTO { ISBN = "12345", Title = "Test Book", Description = "Test Description" },
+            ISBN = "12345",
+            Title = "Test Book",
+            Description = "Test Description",
             GenreId = Guid.NewGuid(),
             AuthorId = Guid.NewGuid()
         };

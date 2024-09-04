@@ -1,6 +1,7 @@
 using MapsterMapper;
 using Moq;
 using OnlineLibrary.BLL.DTOs.Common;
+using OnlineLibrary.BLL.DTOs.Responses.Genre;
 using OnlineLibrary.BLL.Exceptions;
 using OnlineLibrary.BLL.UseCases.Implementation.Genre;
 using OnlineLibrary.DAL.Infrastructure.Interfaces;
@@ -27,11 +28,11 @@ public class GetGenreByIdUseCaseTests
         // Arrange
         var genreId = Guid.NewGuid();
         var genreEntity = new GenreEntity { Id = genreId, Name = "Fantasy" };
-        var genreDTO = new GenreDTO { Id = genreId, Name = "Fantasy" };
+        var genreDTO = new GenreResponseDTO() { Id = genreId, Name = "Fantasy" };
 
         _unitOfWorkMock.Setup(u => u.GetBaseRepository<GenreEntity>().GetByIdAsync(genreId, It.IsAny<CancellationToken>()))
             .ReturnsAsync(genreEntity);
-        _mapperMock.Setup(m => m.Map<GenreDTO>(It.IsAny<GenreEntity>()))
+        _mapperMock.Setup(m => m.Map<GenreResponseDTO>(It.IsAny<GenreEntity>()))
             .Returns(genreDTO);
 
         // Act

@@ -55,24 +55,18 @@ public class GetAllAuthorsUseCaseTests
             new AuthorResponseDTO
             {
                 Id = authors[0].Id,
-                AuthorDTO = new AuthorDTO()
-                {
-                    FirstName = "John",
-                    LastName = "Doe",
-                    DateOfBirth = new DateTime(1970, 1, 1),
-                    Country = "USA"
-                }
+                FirstName = "John",
+                LastName = "Doe",
+                DateOfBirth = new DateTime(1970, 1, 1),
+                Country = "USA"
             },
             new AuthorResponseDTO
             {
                 Id = authors[1].Id,
-                AuthorDTO = new AuthorDTO()
-                {
-                    FirstName = "Jane",
-                    LastName = "Smith",
-                    DateOfBirth = new DateTime(1980, 5, 15),
-                    Country = "UK"
-                }
+                FirstName = "Jane",
+                LastName = "Smith",
+                DateOfBirth = new DateTime(1980, 5, 15),
+                Country = "UK"
             }
         };
 

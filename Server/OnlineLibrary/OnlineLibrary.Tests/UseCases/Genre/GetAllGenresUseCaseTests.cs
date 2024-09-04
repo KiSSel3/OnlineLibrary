@@ -9,6 +9,7 @@ using OnlineLibrary.BLL.UseCases.Implementation.Genre;
 using OnlineLibrary.DAL.Infrastructure.Interfaces;
 using OnlineLibrary.Domain.Entities;
 using OnlineLibrary.BLL.DTOs.Common;
+using OnlineLibrary.BLL.DTOs.Responses.Genre;
 
 namespace OnlineLibrary.Tests.UseCases.Genre;
 
@@ -31,11 +32,11 @@ public class GetAllGenresUseCaseTests
     {
         // Arrange
         var genres = new List<GenreEntity> { new GenreEntity { Name = "Fantasy" } };
-        var genreDTOs = new List<GenreDTO> { new GenreDTO { Name = "Fantasy" } };
+        var genreDTOs = new List<GenreResponseDTO> { new GenreResponseDTO() { Name = "Fantasy" } };
 
         _unitOfWorkMock.Setup(u => u.GetBaseRepository<GenreEntity>().GetAllAsync(It.IsAny<CancellationToken>()))
             .ReturnsAsync(genres);
-        _mapperMock.Setup(m => m.Map<IEnumerable<GenreDTO>>(It.IsAny<IEnumerable<GenreEntity>>()))
+        _mapperMock.Setup(m => m.Map<IEnumerable<GenreResponseDTO>>(It.IsAny<IEnumerable<GenreEntity>>()))
             .Returns(genreDTOs);
 
         // Act
