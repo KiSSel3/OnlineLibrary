@@ -22,20 +22,17 @@ public class UpdateBookUseCase : IUpdateBookUseCase
         _cache = cache;
     }
 
-    public async Task ExecuteAsync(BookUpdateRequestDTO bookRequestDTO, CancellationToken cancellationToken = default)
+    public async Task ExecuteAsync(Guid bookId, BookUpdateRequestDTO bookRequestDTO, CancellationToken cancellationToken = default)
     {
         var bookRepository = _unitOfWork.GetCustomRepository<IBookRepository>();
 
-        var existingBook = await bookRepository.GetByIdAsync(bookRequestDTO.Id, cancellationToken);
+        var existingBook = await bookRepository.GetByIdAsync(bookId, cancellationToken);
         if (existingBook == null)
         {
-            throw new EntityNotFoundException("Book", bookRequestDTO.Id);
+            throw new EntityNotFoundException("Book", bookId);
         }
 
-        existingBook.Title = bookRequestDTO.BookDTO.Title;
-        existingBook.Description = bookRequestDTO.BookDTO.Description;
-        existingBook.GenreId = bookRequestDTO.GenreId;
-        existingBook.AuthorId = bookRequestDTO.AuthorId;
+        _mapper.Map(bookRequestDTO, existingBook);
         
         if (bookRequestDTO.Image != null)
         {
@@ -49,7 +46,7 @@ public class UpdateBookUseCase : IUpdateBookUseCase
         bookRepository.Update(existingBook);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
         
-        var cacheKey = $"BookDetails_{bookRequestDTO.Id}";
+        var cacheKey = $"BookDetails_{existingBook.Id}";
 
         if (_cache.TryGetValue(cacheKey, out _))
         {

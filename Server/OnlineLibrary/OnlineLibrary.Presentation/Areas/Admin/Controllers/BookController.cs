@@ -31,10 +31,10 @@ public class BookController : Controller
     }
 
     
-    [HttpPut("update")]
-    public async Task<IActionResult> UpdateAsync([FromForm] BookUpdateRequestDTO bookUpdateRequestDTO, CancellationToken cancellationToken = default)
+    [HttpPut("update/{id}")]
+    public async Task<IActionResult> UpdateAsync(Guid id, [FromForm] BookUpdateRequestDTO bookUpdateRequestDTO, CancellationToken cancellationToken = default)
     {
-        await _updateBookUseCase.ExecuteAsync(bookUpdateRequestDTO,cancellationToken);
+        await _updateBookUseCase.ExecuteAsync(id, bookUpdateRequestDTO, cancellationToken);
         return Ok();
     }
     

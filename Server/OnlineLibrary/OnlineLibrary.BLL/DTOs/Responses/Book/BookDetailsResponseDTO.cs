@@ -4,11 +4,8 @@ using OnlineLibrary.BLL.DTOs.Responses.Genre;
 
 namespace OnlineLibrary.BLL.DTOs.Responses.Book;
 
-public class BookDetailsResponseDTO
+public class BookDetailsResponseDTO : BookResponseDTO
 {
-    public BookResponseDTO BookResponseDTO { get; set; }
-    public GenreResponseDTO GenreDTO { get; set; }
+    public GenreResponseDTO GenreResponseDTO { get; set; }
     public AuthorResponseDTO AuthorResponseDTO { get; set; }
-    
-    public string Image { get; set; }
 }

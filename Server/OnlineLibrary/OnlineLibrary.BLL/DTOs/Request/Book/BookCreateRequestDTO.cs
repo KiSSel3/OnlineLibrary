@@ -3,10 +3,8 @@ using OnlineLibrary.BLL.DTOs.Common;
 
 namespace OnlineLibrary.BLL.DTOs.Request.Book;
 
-public class BookCreateRequestDTO
+public class BookCreateRequestDTO : BookDTO
 {
-    public BookDTO BookDTO { get; set; }
-    
     public IFormFile? Image { get; set; }
     
     public Guid GenreId { get; set; }

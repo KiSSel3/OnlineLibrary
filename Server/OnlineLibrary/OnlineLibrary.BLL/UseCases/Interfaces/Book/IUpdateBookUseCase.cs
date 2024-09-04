@@ -4,5 +4,5 @@ namespace OnlineLibrary.BLL.UseCases.Interfaces.Book;
 
 public interface IUpdateBookUseCase
 {
-    Task ExecuteAsync(BookUpdateRequestDTO bookRequestDTO, CancellationToken cancellationToken = default);
+    Task ExecuteAsync(Guid bookId, BookUpdateRequestDTO bookRequestDTO, CancellationToken cancellationToken = default);
 }

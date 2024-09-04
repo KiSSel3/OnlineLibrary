@@ -35,12 +35,9 @@ public class GetBookByIsbnUseCase : IGetBookByIsbnUseCase
             var genre = await GetGenreByIdAsync(book.GenreId, cancellationToken);
             var author = await GetAuthorByIdAsync(book.AuthorId, cancellationToken);
             
-            cachedBookDetails = new BookDetailsResponseDTO
-            {
-                AuthorResponseDTO = _mapper.Map<AuthorResponseDTO>(author),
-                BookResponseDTO = _mapper.Map<BookResponseDTO>(book),
-                GenreDTO = _mapper.Map<GenreResponseDTO>(genre),
-            };
+            cachedBookDetails = _mapper.Map<BookDetailsResponseDTO>(book);
+            cachedBookDetails.AuthorResponseDTO = _mapper.Map<AuthorResponseDTO>(author);
+            cachedBookDetails.GenreResponseDTO = _mapper.Map<GenreResponseDTO>(genre);
             
             if (book.Image != null)
             {
