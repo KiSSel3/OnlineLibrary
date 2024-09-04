@@ -198,6 +198,7 @@ public class UserRepositoryTests
     {
         // Arrange
         await using var context = CreateInMemoryDbContext();
+        context.Users.RemoveRange(context.Users);
         var repository = new UserRepository(context);
 
         var user1 = new UserEntity

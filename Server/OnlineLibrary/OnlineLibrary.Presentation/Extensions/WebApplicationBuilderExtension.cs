@@ -209,7 +209,13 @@ public static class WebApplicationBuilderExtension
     {
         var config = new TypeAdapterConfig();
 
-        new RegisterMapper().Register(config);
+        new AuthorProfile().Register(config);
+        new BookProfile().Register(config);
+        new GenreProfile().Register(config);
+        new LoanProfile().Register(config);
+        new RoleProfile().Register(config);
+        new UserProfile().Register(config);
+        new UserRoleProfile().Register(config);
        
         return config;
     }
