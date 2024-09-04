@@ -40,7 +40,7 @@
       <mat-label>Author</mat-label>
       <mat-select formControlName="authorId">
         <mat-option *ngFor="let author of authors" [value]="author.id">
-          {{ author.authorDTO.firstName }} {{ author.authorDTO.lastName }}
+          {{ author.firstName }} {{ author.lastName }}
         </mat-option>
       </mat-select>
       <mat-error *ngIf="bookForm.get('authorId')?.hasError('required')">

@@ -1,7 +1,6 @@
 import {BookDTO} from "./book.dto";
 
-export interface BookResponseDTO {
+export interface BookResponseDTO extends BookDTO {
   id: string;
-  bookDTO: BookDTO;
   image: string;
 }

@@ -69,8 +69,8 @@ export class BookService {
     return this.http.post<void>(`${this.baseBookUrl}/create`, bookData);
   }
 
-  updateBook(formData: FormData): Observable<any> {
-    return this.http.put(`${this.baseBookUrl}/update`, formData);
+  updateBook(id: string, formData: FormData): Observable<any> {
+    return this.http.put(`${this.baseBookUrl}/update/${id}`, formData);
   }
 
   deleteBook(bookId: string): Observable<void> {

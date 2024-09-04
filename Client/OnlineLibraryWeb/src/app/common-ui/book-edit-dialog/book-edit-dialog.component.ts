@@ -56,13 +56,12 @@ export class BookEditDialogComponent {
     this.genreService.getAllGenres().subscribe(genres => this.genres = genres);
     this.authorService.getAllAuthors().subscribe(authors => this.authors = authors);
 
-    // Populate the form with data
     if (this.data && this.data.book) {
       this.bookForm.patchValue({
-        isbn: this.data.book.bookResponseDTO.bookDTO.isbn,
-        title: this.data.book.bookResponseDTO.bookDTO.title,
-        description: this.data.book.bookResponseDTO.bookDTO.description,
-        genreId: this.data.book.genreDTO.id,
+        isbn: this.data.book.isbn,
+        title: this.data.book.title,
+        description: this.data.book.description,
+        genreId: this.data.book.genreResponseDTO.id,
         authorId: this.data.book.authorResponseDTO.id
       });
     }
@@ -84,10 +83,9 @@ export class BookEditDialogComponent {
   onClick(): void {
     if (this.bookForm.valid) {
       const formData = new FormData();
-      formData.append('Id', this.data.book.bookResponseDTO.id.toString());
-      formData.append('BookDTO.ISBN', this.bookForm.get('isbn')?.value);
-      formData.append('BookDTO.Title', this.bookForm.get('title')?.value);
-      formData.append('BookDTO.Description', this.bookForm.get('description')?.value);
+      formData.append('ISBN', this.bookForm.get('isbn')?.value);
+      formData.append('Title', this.bookForm.get('title')?.value);
+      formData.append('Description', this.bookForm.get('description')?.value);
 
       if (this.selectedFile) {
         formData.append('Image', this.selectedFile);
@@ -96,7 +94,7 @@ export class BookEditDialogComponent {
       formData.append('GenreId', this.bookForm.get('genreId')?.value);
       formData.append('AuthorId', this.bookForm.get('authorId')?.value);
 
-      this.bookService.updateBook(formData).subscribe({
+      this.bookService.updateBook(this.data.book.id.toString(), formData).subscribe({
         next: () => this.dialogRef.close(),
         error: (error) => console.error('Failed to update book', error)
       });

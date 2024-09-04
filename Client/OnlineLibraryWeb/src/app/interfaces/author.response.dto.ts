@@ -1,6 +1,5 @@
 import {AuthorDTO} from "./author.dto";
 
-export interface AuthorResponseDTO {
+export interface AuthorResponseDTO extends AuthorDTO{
   id: string;
-  authorDTO: AuthorDTO;
 }

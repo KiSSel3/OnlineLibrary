@@ -75,9 +75,9 @@ export class BookCreateDialogComponent implements OnInit {
   onClick() {
     if (this.bookForm.valid) {
       const formData = new FormData();
-      formData.append('BookDTO.ISBN', this.bookForm.get('isbn')?.value);
-      formData.append('BookDTO.Title', this.bookForm.get('title')?.value);
-      formData.append('BookDTO.Description', this.bookForm.get('description')?.value);
+      formData.append('ISBN', this.bookForm.get('isbn')?.value);
+      formData.append('Title', this.bookForm.get('title')?.value);
+      formData.append('Description', this.bookForm.get('description')?.value);
 
       if (this.selectedFile) {
         formData.append('Image', this.selectedFile);

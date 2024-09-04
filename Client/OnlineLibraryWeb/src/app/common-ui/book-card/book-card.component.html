@@ -5,7 +5,7 @@
         <img
           *ngIf="book.image; else defaultImage"
           [src]="book.image | byteArrayToBase64"
-          [alt]="book.bookDTO.title"
+          [alt]="book.title"
         >
         <ng-template #defaultImage>
           <img src="https://amiel.club/uploads/posts/2022-03/1647665180_1-amiel-club-p-kartinki-dlya-oblozhki-knigi-1.jpg">
@@ -15,7 +15,7 @@
       <a class="detail-link" (click)="goToDetails(book.id)" title="Быстрый просмотр"></a>
     </div>
     <div class="product-list">
-      <h3>{{ book.bookDTO.title }}</h3>
+      <h3>{{ book.title }}</h3>
       <div class="information">{{ isAvailable ? "Available" : "Not available" }}</div>
     </div>
   </div>
