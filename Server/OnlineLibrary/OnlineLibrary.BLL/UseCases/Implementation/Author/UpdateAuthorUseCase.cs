@@ -1,5 +1,5 @@
 using MapsterMapper;
-using OnlineLibrary.BLL.DTOs.Request.Author;
+using OnlineLibrary.BLL.DTOs.Common;
 using OnlineLibrary.BLL.Exceptions;
 using OnlineLibrary.BLL.UseCases.Interfaces.Author;
 using OnlineLibrary.DAL.Infrastructure.Interfaces;
@@ -17,18 +17,18 @@ public class UpdateAuthorUseCase : IUpdateAuthorUseCase
         _unitOfWork = unitOfWork;
         _mapper = mapper;
     }
-
-    public async Task ExecuteAsync(AuthorUpdateRequestDTO authorRequestDTO, CancellationToken cancellationToken = default)
+    
+    public async Task ExecuteAsync(Guid authorId, AuthorDTO authorDTO, CancellationToken cancellationToken = default)
     {
         var authorRepository = _unitOfWork.GetBaseRepository<AuthorEntity>();
 
-        var author = await authorRepository.GetByIdAsync(authorRequestDTO.Id, cancellationToken);
+        var author = await authorRepository.GetByIdAsync(authorId, cancellationToken);
         if (author == null)
         {
-            throw new EntityNotFoundException("Author", authorRequestDTO.Id);
+            throw new EntityNotFoundException("Author", authorId);
         }
 
-        author = _mapper.Map<AuthorEntity>(authorRequestDTO);
+        _mapper.Map(authorDTO, author);
         
         authorRepository.Update(author);
         await _unitOfWork.SaveChangesAsync(cancellationToken);

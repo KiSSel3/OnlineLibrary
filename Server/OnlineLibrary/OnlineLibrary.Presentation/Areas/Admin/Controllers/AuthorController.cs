@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OnlineLibrary.BLL.DTOs.Common;
-using OnlineLibrary.BLL.DTOs.Request.Author;
 using OnlineLibrary.BLL.UseCases.Interfaces.Author;
 
 namespace OnlineLibrary.Presentation.Areas.Admin.Controllers;
@@ -31,10 +30,10 @@ public class AuthorController : ControllerBase
         return Ok();
     }
     
-    [HttpPut("update")]
-    public async Task<IActionResult> UpdateAsync([FromBody] AuthorUpdateRequestDTO authorUpdateRequestDTO, CancellationToken cancellationToken = default)
+    [HttpPut("update/{id}")]
+    public async Task<IActionResult> UpdateAsync(Guid id, [FromBody] AuthorDTO authorDTO, CancellationToken cancellationToken = default)
     {
-        await _updateAuthorUseCase.ExecuteAsync(authorUpdateRequestDTO,cancellationToken);
+        await _updateAuthorUseCase.ExecuteAsync(id, authorDTO, cancellationToken);
         return Ok();
     }
     

@@ -1,8 +1,8 @@
-using OnlineLibrary.BLL.DTOs.Request.Author;
+using OnlineLibrary.BLL.DTOs.Common;
 
 namespace OnlineLibrary.BLL.UseCases.Interfaces.Author;
 
 public interface IUpdateAuthorUseCase
 {
-    Task ExecuteAsync(AuthorUpdateRequestDTO authorRequestDTO, CancellationToken cancellationToken = default);
+    Task ExecuteAsync(Guid authorId, AuthorDTO authorDTO, CancellationToken cancellationToken = default);
 }
