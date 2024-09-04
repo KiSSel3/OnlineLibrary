@@ -1,6 +1,6 @@
 using OnlineLibrary.BLL.DTOs.Responses.Other;
 using OnlineLibrary.BLL.Exceptions;
-using OnlineLibrary.BLL.Infrastructure.Services.Interfaces;
+using OnlineLibrary.BLL.Services.Interfaces;
 using OnlineLibrary.BLL.UseCases.Interfaces.User;
 using OnlineLibrary.DAL.Infrastructure.Interfaces;
 using OnlineLibrary.DAL.Repositories.Interfaces;

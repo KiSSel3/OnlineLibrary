@@ -1,6 +1,6 @@
 using OnlineLibrary.Domain.Models;
 
-namespace OnlineLibrary.BLL.Infrastructure.Services.Interfaces;
+namespace OnlineLibrary.BLL.Services.Interfaces;
 
 public interface INotificationService
 {

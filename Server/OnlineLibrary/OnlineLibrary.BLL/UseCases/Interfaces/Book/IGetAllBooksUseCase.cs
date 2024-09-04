@@ -1,7 +1,7 @@
 using OnlineLibrary.BLL.DTOs.Common;
 using OnlineLibrary.BLL.DTOs.Request.Book;
 using OnlineLibrary.BLL.DTOs.Responses.Book;
-using OnlineLibrary.BLL.Infrastructure.Helpers;
+using OnlineLibrary.BLL.Helpers;
 
 namespace OnlineLibrary.BLL.UseCases.Interfaces.Book;
 

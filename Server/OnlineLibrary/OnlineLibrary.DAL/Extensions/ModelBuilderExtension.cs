@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using OnlineLibrary.Domain.Entities;
 
-namespace OnlineLibrary.DAL.Infrastructure.Extensions;
+namespace OnlineLibrary.DAL.Extensions;
 
 public static class ModelBuilderExtension
 {

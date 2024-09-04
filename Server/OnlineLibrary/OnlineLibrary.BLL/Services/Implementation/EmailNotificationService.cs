@@ -1,12 +1,12 @@
-using System.Threading;
-using System.Threading.Tasks;
 using MailKit.Net.Smtp;
 using MailKit.Security;
-using MimeKit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using OnlineLibrary.BLL.Infrastructure.Services.Interfaces;
+using MimeKit;
+using OnlineLibrary.BLL.Services.Interfaces;
 using OnlineLibrary.Domain.Models;
+
+namespace OnlineLibrary.BLL.Services.Implementation;
 
 public class EmailNotificationService : INotificationService
 {

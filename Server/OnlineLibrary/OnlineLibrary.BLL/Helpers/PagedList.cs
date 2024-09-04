@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace OnlineLibrary.BLL.Infrastructure.Helpers;
+namespace OnlineLibrary.BLL.Helpers;
 
 public class PagedList<T> : List<T>
 {

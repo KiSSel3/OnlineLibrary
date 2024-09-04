@@ -2,7 +2,7 @@ using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using OnlineLibrary.BLL.DTOs.Request.Book;
 using OnlineLibrary.BLL.DTOs.Responses.Book;
-using OnlineLibrary.BLL.Infrastructure.Helpers;
+using OnlineLibrary.BLL.Helpers;
 using OnlineLibrary.BLL.UseCases.Interfaces.Book;
 using OnlineLibrary.DAL.Infrastructure.Interfaces;
 using OnlineLibrary.DAL.Repositories.Interfaces;

@@ -2,13 +2,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using OnlineLibrary.BLL.Infrastructure.Services.Interfaces;
+using OnlineLibrary.BLL.Services.Interfaces;
 using OnlineLibrary.DAL.Infrastructure.Interfaces;
 using OnlineLibrary.DAL.Repositories.Interfaces;
 using OnlineLibrary.Domain.Entities;
 using OnlineLibrary.Domain.Models;
 
-namespace OnlineLibrary.BLL.Infrastructure.BackgroundServices;
+namespace OnlineLibrary.BLL.BackgroundServices;
 
 public class LoanNotificationService : BackgroundService
 {

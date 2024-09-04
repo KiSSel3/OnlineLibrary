@@ -1,6 +1,6 @@
-using OnlineLibrary.BLL.Infrastructure.Services.Interfaces;
+using OnlineLibrary.BLL.Services.Interfaces;
 
-namespace OnlineLibrary.BLL.Infrastructure.Services.Implementation;
+namespace OnlineLibrary.BLL.Services.Implementation;
 
 public class PasswordService : IPasswordService
 {

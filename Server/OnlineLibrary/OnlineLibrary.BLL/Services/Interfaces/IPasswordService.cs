@@ -1,4 +1,4 @@
-namespace OnlineLibrary.BLL.Infrastructure.Services.Interfaces;
+namespace OnlineLibrary.BLL.Services.Interfaces;
 
 public interface IPasswordService
 {

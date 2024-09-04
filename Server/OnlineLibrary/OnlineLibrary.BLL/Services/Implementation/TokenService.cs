@@ -4,10 +4,10 @@ using System.Security.Cryptography;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using OnlineLibrary.BLL.Infrastructure.Services.Interfaces;
+using OnlineLibrary.BLL.Services.Interfaces;
 using OnlineLibrary.Domain.Entities;
 
-namespace OnlineLibrary.BLL.Infrastructure.Services.Implementation;
+namespace OnlineLibrary.BLL.Services.Implementation;
 
 public class TokenService : ITokenService
 {

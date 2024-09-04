@@ -1,7 +1,7 @@
 using System.Security.Claims;
 using Moq;
 using OnlineLibrary.BLL.Exceptions;
-using OnlineLibrary.BLL.Infrastructure.Services.Interfaces;
+using OnlineLibrary.BLL.Services.Interfaces;
 using OnlineLibrary.BLL.UseCases.Implementation.User;
 using OnlineLibrary.DAL.Infrastructure.Interfaces;
 using OnlineLibrary.DAL.Repositories.Interfaces;

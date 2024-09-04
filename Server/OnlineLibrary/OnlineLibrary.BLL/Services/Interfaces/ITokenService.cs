@@ -1,7 +1,7 @@
 using System.Security.Claims;
 using OnlineLibrary.Domain.Entities;
 
-namespace OnlineLibrary.BLL.Infrastructure.Services.Interfaces;
+namespace OnlineLibrary.BLL.Services.Interfaces;
 
 public interface ITokenService
 {
