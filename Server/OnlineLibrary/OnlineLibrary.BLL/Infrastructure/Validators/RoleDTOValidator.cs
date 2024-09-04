@@ -1,9 +1,10 @@
 using FluentValidation;
 using OnlineLibrary.BLL.DTOs.Common;
+using OnlineLibrary.BLL.DTOs.Responses.Role;
 
 namespace OnlineLibrary.BLL.Infrastructure.Validators;
 
-public class RoleDTOValidator : AbstractValidator<RoleDTO>
+public class RoleDTOValidator : AbstractValidator<RoleResponseDTO>
 {
     public RoleDTOValidator()
     {

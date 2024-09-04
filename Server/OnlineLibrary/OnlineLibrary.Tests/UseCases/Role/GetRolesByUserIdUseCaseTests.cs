@@ -1,6 +1,7 @@
 using MapsterMapper;
 using Moq;
 using OnlineLibrary.BLL.DTOs.Common;
+using OnlineLibrary.BLL.DTOs.Responses.Role;
 using OnlineLibrary.BLL.UseCases.Implementation.Role;
 using OnlineLibrary.DAL.Infrastructure.Interfaces;
 using OnlineLibrary.DAL.Repositories.Interfaces;
@@ -31,10 +32,10 @@ public class GetRolesByUserIdUseCaseTests
         // Arrange
         var userId = Guid.NewGuid();
         var roles = new List<RoleEntity> { new RoleEntity() };
-        var roleDTOs = new List<RoleDTO> { new RoleDTO() };
+        var roleDTOs = new List<RoleResponseDTO> { new RoleResponseDTO() };
 
         _roleRepositoryMock.Setup(r => r.GetRolesByUserIdAsync(userId, It.IsAny<CancellationToken>())).ReturnsAsync(roles);
-        _mapperMock.Setup(m => m.Map<IEnumerable<RoleDTO>>(roles)).Returns(roleDTOs);
+        _mapperMock.Setup(m => m.Map<IEnumerable<RoleResponseDTO>>(roles)).Returns(roleDTOs);
 
         // Act
         var result = await _useCase.ExecuteAsync(userId, CancellationToken.None);

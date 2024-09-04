@@ -1,5 +1,6 @@
 using MapsterMapper;
 using OnlineLibrary.BLL.DTOs.Common;
+using OnlineLibrary.BLL.DTOs.Responses.Role;
 using OnlineLibrary.BLL.UseCases.Interfaces.Role;
 using OnlineLibrary.DAL.Infrastructure.Interfaces;
 using OnlineLibrary.DAL.Repositories.Interfaces;
@@ -17,9 +18,9 @@ public class GetRolesByUserIdUseCase : IGetRolesByUserIdUseCase
         _mapper = mapper;
     }
 
-    public async Task<IEnumerable<RoleDTO>> ExecuteAsync(Guid userId, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<RoleResponseDTO>> ExecuteAsync(Guid userId, CancellationToken cancellationToken = default)
     {
         var roles = await _unitOfWork.GetCustomRepository<IRoleRepository>().GetRolesByUserIdAsync(userId, cancellationToken);
-        return _mapper.Map<IEnumerable<RoleDTO>>(roles);
+        return _mapper.Map<IEnumerable<RoleResponseDTO>>(roles);
     }
 }
