@@ -3,6 +3,7 @@ using Microsoft.Extensions.Caching.Memory;
 using OnlineLibrary.BLL.DTOs.Common;
 using OnlineLibrary.BLL.DTOs.Responses.Author;
 using OnlineLibrary.BLL.DTOs.Responses.Book;
+using OnlineLibrary.BLL.DTOs.Responses.Genre;
 using OnlineLibrary.BLL.Exceptions;
 using OnlineLibrary.BLL.UseCases.Interfaces.Book;
 using OnlineLibrary.DAL.Infrastructure.Interfaces;
@@ -37,7 +38,7 @@ public class GetBookByIdUseCase : IGetBookByIdUseCase
             {
                 AuthorResponseDTO = _mapper.Map<AuthorResponseDTO>(author),
                 BookResponseDTO = _mapper.Map<BookResponseDTO>(book),
-                GenreDTO = _mapper.Map<GenreDTO>(genre),
+                GenreDTO = _mapper.Map<GenreResponseDTO>(genre),
             };
 
             if (book.Image != null)

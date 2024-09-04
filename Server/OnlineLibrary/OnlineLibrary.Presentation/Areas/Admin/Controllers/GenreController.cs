@@ -29,10 +29,10 @@ public class GenreController : Controller
         return Ok();
     }
     
-    [HttpPut("update")]
-    public async Task<IActionResult> UpdateAsync([FromBody] GenreDTO genreDTO, CancellationToken cancellationToken = default)
+    [HttpPut("update/{id}")]
+    public async Task<IActionResult> UpdateAsync(Guid id, [FromBody] string name, CancellationToken cancellationToken = default)
     {
-        await _updateGenreUseCase.ExecuteAsync(genreDTO,cancellationToken);
+        await _updateGenreUseCase.ExecuteAsync(id, name, cancellationToken);
         return Ok();
     }
     

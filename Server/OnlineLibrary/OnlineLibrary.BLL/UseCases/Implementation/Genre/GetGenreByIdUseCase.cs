@@ -1,6 +1,7 @@
 using MapsterMapper;
 using OnlineLibrary.BLL.DTOs.Common;
 using OnlineLibrary.BLL.DTOs.Responses.Author;
+using OnlineLibrary.BLL.DTOs.Responses.Genre;
 using OnlineLibrary.BLL.Exceptions;
 using OnlineLibrary.BLL.UseCases.Interfaces.Genre;
 using OnlineLibrary.DAL.Infrastructure.Interfaces;
@@ -19,7 +20,7 @@ public class GetGenreByIdUseCase : IGetGenreByIdUseCase
         _mapper = mapper;
     }
 
-    public async Task<GenreDTO> ExecuteAsync(Guid genreId, CancellationToken cancellationToken = default)
+    public async Task<GenreResponseDTO> ExecuteAsync(Guid genreId, CancellationToken cancellationToken = default)
     {
         var genre = await _unitOfWork.GetBaseRepository<GenreEntity>().GetByIdAsync(genreId, cancellationToken);
         if (genre == null)
@@ -27,6 +28,6 @@ public class GetGenreByIdUseCase : IGetGenreByIdUseCase
             throw new EntityNotFoundException("Genre", genreId);
         }
 
-        return _mapper.Map<GenreDTO>(genre);
+        return _mapper.Map<GenreResponseDTO>(genre);
     }
 }

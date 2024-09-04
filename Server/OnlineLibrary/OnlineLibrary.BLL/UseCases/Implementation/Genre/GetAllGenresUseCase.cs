@@ -1,5 +1,6 @@
 using MapsterMapper;
 using OnlineLibrary.BLL.DTOs.Common;
+using OnlineLibrary.BLL.DTOs.Responses.Genre;
 using OnlineLibrary.BLL.UseCases.Interfaces.Genre;
 using OnlineLibrary.DAL.Infrastructure.Interfaces;
 using OnlineLibrary.Domain.Entities;
@@ -17,9 +18,9 @@ public class GetAllGenresUseCase : IGetAllGenresUseCase
         _mapper = mapper;
     }
 
-    public async Task<IEnumerable<GenreDTO>> ExecuteAsync(CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<GenreResponseDTO>> ExecuteAsync(CancellationToken cancellationToken = default)
     {
         var genres = await _unitOfWork.GetBaseRepository<GenreEntity>().GetAllAsync(cancellationToken);
-        return _mapper.Map<IEnumerable<GenreDTO>>(genres);
+        return _mapper.Map<IEnumerable<GenreResponseDTO>>(genres);
     }
 }

@@ -1,5 +1,4 @@
 using MapsterMapper;
-using OnlineLibrary.BLL.DTOs.Common;
 using OnlineLibrary.BLL.Exceptions;
 using OnlineLibrary.BLL.UseCases.Interfaces.Genre;
 using OnlineLibrary.DAL.Infrastructure.Interfaces;
@@ -18,17 +17,17 @@ public class UpdateGenreUseCase : IUpdateGenreUseCase
         _mapper = mapper;
     }
 
-    public async Task ExecuteAsync(GenreDTO genreDto, CancellationToken cancellationToken = default)
+    public async Task ExecuteAsync(Guid genreId, string genreName, CancellationToken cancellationToken = default)
     {
         var genreRepository = _unitOfWork.GetBaseRepository<GenreEntity>();
 
-        var genre = await genreRepository.GetByIdAsync(genreDto.Id, cancellationToken);
+        var genre = await genreRepository.GetByIdAsync(genreId, cancellationToken);
         if (genre == null)
         {
-            throw new EntityNotFoundException("Genre", genreDto.Id);
+            throw new EntityNotFoundException("Genre", genreId);
         }
 
-        genre = _mapper.Map<GenreEntity>(genreDto);
+        genre.Name = genreName;
         
         genreRepository.Update(genre);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
